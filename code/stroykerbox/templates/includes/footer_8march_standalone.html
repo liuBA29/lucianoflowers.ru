@@ -1,0 +1,44 @@
+{% load static %}
+{# Футер 8march для тестовой страницы. Данные из context (footer_phone, footer_contacts, footer_logo_url).
+   Для всех страниц позже: использовать includes/footer_8march.html с тегами заказчика. #}
+<footer class="footer--8march">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-first-column">
+                {% if footer_phone %}
+                <div class="footer-phone">
+                    <a href="tel:{{ footer_phone|cut:' '|cut:'('|cut:')'|cut:'-' }}">{{ footer_phone }}</a>
+                </div>
+                {% endif %}
+                {% if footer_contacts %}
+                <span class="footer-contact">{{ footer_contacts|safe }}</span>
+                {% endif %}
+                <a href="/" class="logo footer--8march__logo--desktop">
+                    <img src="{% if footer_logo_url %}{{ footer_logo_url }}{% else %}{% static '8march_design/images/LUCIANO/Logo.svg' %}{% endif %}" alt="LUCIANO">
+                </a>
+            </div>
+            <div class="footer-content__menu">
+                <div class="footer-content__column footer-content__column--lg">
+                    <span class="footer-content__title">Каталог</span>
+                    <div class="footer-content__ul-content">
+                        <ul>
+                            <li><a href="{% url 'catalog:index' %}">Готовая витрина</a></li>
+                            <li><a href="{% url 'catalog:index' %}">Моно букеты</a></li>
+                            <li><a href="{% url 'catalog:index' %}">Авторские букеты</a></li>
+                            <li><a href="{% url 'catalog:index' %}">Композиции</a></li>
+                            <li><a href="{% url 'catalog:index' %}">Подарки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-right">
+                <p class="footer-copyright">© «LUCIANO», {% now "Y" %}</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom__left">
+                <span class="copy version">8march test</span>
+            </div>
+        </div>
+    </div>
+</footer>

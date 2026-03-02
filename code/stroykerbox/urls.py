@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.http import HttpResponse
+from django.shortcuts import render
 
 from rest_framework.authtoken import views
 from filebrowser.sites import site
@@ -21,6 +22,32 @@ from stroykerbox.apps.search.views import SearchResult
 from stroykerbox.apps.common.views import StaffCheckPage, DashboardPage
 
 YML_URL = getattr(config, 'YML_URL', 'catalog_export.yml') or 'catalog_export.yml'
+
+
+def view_8march_design_test(request):
+    """Тестовая страница 8march: главная + хэдер + футер. Контекст для includes/header_8march_standalone и footer_8march_standalone."""
+    cart = (request.session.get('cart') or []) if hasattr(request, 'session') else []
+    cart_count = len(cart) if isinstance(cart, (list, tuple)) else 0
+    header_logo_url = footer_logo_url = header_phone = footer_contacts = ''
+    try:
+        media_url = getattr(settings, 'MEDIA_URL', '') or ''
+        header_logo = getattr(config, 'HEDER_LOGO_FILE', None) or getattr(config, 'HEADER_LOGO_FILE', None)
+        header_logo_url = (media_url + header_logo) if header_logo else ''
+        footer_logo = getattr(config, 'FOOTER_LOGO_FILE', None)
+        footer_logo_url = (media_url + footer_logo) if footer_logo else ''
+        header_phone = getattr(config, 'CONTACT_PHONE', None) or getattr(config, 'PHONE', None) or ''
+        footer_contacts = getattr(config, 'MAIL__FOOTER_CONTACTS', None) or ''
+    except Exception:
+        pass
+    return render(request, '8march_design_test.html', {
+        'cart_count': cart_count,
+        'header_phone': header_phone or None,
+        'header_logo_url': header_logo_url or None,
+        'footer_phone': header_phone or None,
+        'footer_contacts': footer_contacts or None,
+        'footer_logo_url': footer_logo_url or None,
+    })
+
 
 sitemaps = {
     'news': news_sitemap.NewsSitemap,
@@ -84,25 +111,7 @@ urlpatterns = [
     path('content-check/', StaffCheckPage.as_view(), name='staff-check-page'),
     path('dash/', DashboardPage.as_view(), name='dashboard'),
     # Тестовая страница для проверки деплоя у заказчика. Удалить после запуска нового дизайна.
-    path(
-        '8march_design/',
-        lambda r: HttpResponse(
-            '''
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8">
-                <title>8 марта — тестовый новый дизайн</title>
-              </head>
-              <body>
-                <p>Здесь будет новый дизайн главной страницы. Эта страница нужна только для тестового развёртывания и будет удалена перед запуском итогового варианта.</p>
-              </body>
-            </html>
-            ''',
-            content_type='text/html; charset=utf-8',
-        ),
-        name='8march-design-test',
-    ),
+    path('8march_design/', view_8march_design_test, name='8march-design-test'),
 ]
 
 if 'stroykerbox.apps.portfolio' in settings.INSTALLED_APPS:
