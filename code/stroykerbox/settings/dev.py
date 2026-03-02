@@ -28,6 +28,120 @@ MIDDLEWARE += ['stroykerbox.apps.utils.middleware.CustomRedirectFallbackMiddlewa
 
 ALLOWED_HOSTS = ['*', '127.0.0.1', 'stroykerbox.local']
 
+# Дефолты Constance для локального Docker (пустая БД до loaddata).
+# Используется только при settings.dev. У заказчика — settings.luciano, этот блок не трогаем.
+# Сначала явные значения, затем подгружаем остальные из фикстуры
+_constance_defaults = {
+    'INVOICING_DISPLAY_NAME': 'Счёт',
+    'CARD_UPON_RECEIPT_DISPLAY_NAME': 'Картой при получении',
+    'CASH_UPON_RECEIPT_DISPLAY_NAME': 'Наличными при получении',
+    'ONLINE_ON_SITE_DISPLAY_NAME': 'Онлайн на сайте',
+    'CREDIT_DISPLAY_NAME': 'В кредит',
+    'YOOKASSA_DISPLAY_NAME': 'ЮKassa',
+    'STROYKER_BANNERS_LIMIT_FOR_URL': 5,
+    'IMPORT__SKIP_UNCHANGED': True,
+    'IMPORT__SKIP_DIFF': True,
+    'IMPORT__REPORT_SKIPPED': False,
+    'SITE_NAME': 'Luciano Flowers',
+    'DEFAULT_FROM_EMAIL': 'noreply@localhost',
+    'BANNERS_NOTIFY_DAYS_BEFORE_EXPIRE': 7,
+    'NEWS_PER_PAGE': 10,
+    'ARTICLES_SECTION_NAME': 'Статьи',
+    'CATALOG_MENU_TITLE': 'Каталог',
+    'SEARCH__QUERY_MIN_CHARS': 2,
+    'SEARCH_INPUT_PLACEHOLDER': 'Поиск',
+    'PRODUCT_NOT_AVAIBLE_STATUS_NAME': 'Нет в наличии',
+    'PRICE_DEFAULT_LABEL': 'Цена',
+    'ONLINE_PRICE_LABEL_TEXT': 'Цена',
+    'ADD_TO_CART_BTN_LABEL': 'В корзину',
+    'EMPTY_CART_MESSAGE': 'Корзина пуста',
+    'ADMIN__PRODUCT_PER_PAGE': 10,
+    'PRODUCTS_COUNT_ON_PAGE': 10,
+    'ADMIN_SITE_HEADER': 'Luciano Flowers',
+    'ADMIN_SITE_META_TITLE': 'Luciano Flowers',
+    'GLOBAL_ACCESS_AUTHORIZED_ONLY': False,
+    'PRODUCTS_MERGE_BY_MODIFICATION_CODE': False,
+    'IMPORT__CREATE_IF_NOT_EXISTS': False,
+    'SIMPLE_CART_MODE': False,
+    'DELIVERY_PICUP_PAYMENT_METHODS': [],
+    'DELIVERY_TOADDRESS_PAYMENT_METHODS': [],
+    'DELIVERY_TOTC_PAYMENT_METHODS': [],
+    'DELIVERY_METHODS': [],
+    'PAYMENT_METHODS': [],
+    'DELIVERY_PICUP_COST': 0,
+    'DELIVERY_TOADDRESS_COST': 0,
+    'DELIVERY_TOTC_COST': 0,
+    'DELIVERY_PICKUP_DISPLAY_NAME': '',
+    'DELIVERY_TOADDRESS_DISPLAY_NAME': '',
+    'DELIVERY_TOTC_DISPLAY_NAME': '',
+    'INVOICE_PDF_ANON_ALLOWED': False,
+    'YAMAP_DEFAULT_CENTER_LATITUDE': 55.75,
+    'YAMAP_DEFAULT_CENTER_LONGITUDE': 37.62,
+    'CATALOG_MENU_ITEMS_LIMIT': 0,
+    'CATALOG_SHOW_CHILDS_IN_PARENT': False,
+    'CATALOG_PRODUCT_LIST_ON_INDEX_PAGE': False,
+    'PRODUCT_AVAIL_LABEL_VARIANT': '1',
+    'PRODUCT_SHOW_AVAIL_STOCKS': False,
+    'CATEGORY_PRODUCTS_PER_ROW': 3,
+    'PRICE_WITH_PENNIES': False,
+    'SLIDER_CONSTRUCTOR__DATA_SLIDES': 1,
+    'SLIDER_CONSTRUCTOR__DATA_SM_SLIDES': 1,
+    'SLIDER_CONSTRUCTOR__DATA_MD_SLIDES': 1,
+    'SLIDER_CONSTRUCTOR__DATA_LG_SLIDES': 1,
+    'SLIDER_CONSTRUCTOR__DATA_XL_SLIDES': 1,
+    'RELATED_PRODUCTS_DISPLAY_VARIANT': '',
+    'RELATED_PRODUCTS_SHOW_NOT_AVAIBLE': False,
+    'PERSONAL_PRICE_LABEL': '',
+    'PRODUCT_TEASER_VARIANT': '0',
+    'DISPLAY_TAG_CONTAINERS': [],
+    'CAPTCHA_MODE': 'google',
+    'YCAPTCHA_CLIENT_KEY': '',
+    'YCAPTCHA_SERVER_KEY': '',
+    'RECAPTCHA_REGISTRATION_FORM': False,
+    'RECAPTCHA_FEEDBACK_FORM': False,
+    'RECAPTCHA_CALLME_FORM': False,
+    'RECAPTCHA_CART_FORM': False,
+    'CAPTCHA_USE_FOR_BOOKING_FORM': False,
+}
+import json
+import os as _os
+_fixture_path = _os.path.join(_os.path.dirname(__file__), '..', 'apps', 'utils', 'fixtures', 'default_data.json')
+if _os.path.isfile(_fixture_path):
+    try:
+        with open(_fixture_path, 'r', encoding='utf-8') as _f:
+            for _item in json.load(_f):
+                if _item.get('model') == 'constance.constance':
+                    _k = _item.get('fields', {}).get('key')
+                    _v = _item.get('fields', {}).get('value')
+                    if _k and _k not in _constance_defaults:
+                        if isinstance(_v, bool):
+                            _constance_defaults[_k] = _v
+                        elif isinstance(_v, (int, float)):
+                            _constance_defaults[_k] = _v
+                        else:
+                            _constance_defaults[_k] = '' if _v is None else ''
+    except Exception:
+        pass
+# Если есть дамп Constance с сервера — подхватываем все ключи (значения потом из БД после loaddata)
+_dump_path = _os.path.join(_os.path.dirname(__file__), '..', 'apps', 'utils', 'fixtures', 'constance_dump.json')
+if _os.path.isfile(_dump_path):
+    try:
+        with open(_dump_path, 'r', encoding='utf-8') as _f:
+            for _item in json.load(_f):
+                if _item.get('model') == 'constance.constance':
+                    _k = _item.get('fields', {}).get('key')
+                    _v = _item.get('fields', {}).get('value')
+                    if _k and _k not in _constance_defaults:
+                        if isinstance(_v, bool):
+                            _constance_defaults[_k] = _v
+                        elif isinstance(_v, (int, float)):
+                            _constance_defaults[_k] = _v
+                        else:
+                            _constance_defaults[_k] = ''
+    except Exception:
+        pass
+CONSTANCE_CONFIG = {k: (v, '') for k, v in _constance_defaults.items()}
+
 if DEBUG:
     import os  # only if you haven't already imported this
     import socket  # only if you haven't already imported this
@@ -45,7 +159,7 @@ DATABASES = {
         'NAME': 'stroykerbox',
         'USER': 'stroykerbox',
         'PASSWORD': 'stroykerbox',
-        'HOST': 'pg',  # db service name in the docker-compose.yml
+        'HOST': 'db',  # имя сервиса в docker-compose
         'PORT': '5432',
     }
 }

@@ -812,6 +812,14 @@ DJANGO_DRF_FILEPOND_ALLOW_EXTERNAL_UPLOAD_DIR = True
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
 try:
-    from .constants import *  # noqa
+    # Локальная разработка: если есть constants_local.py — используем его (файл в .gitignore).
+    # У заказчика этого файла нет, подхватится их settings/constants.py.
+    from . import constants_local
+    import sys
+    sys.modules['stroykerbox.settings.constants'] = constants_local
+    from .constants_local import *  # noqa
 except ImportError:
-    pass
+    try:
+        from .constants import *  # noqa
+    except ImportError:
+        pass

@@ -32,3 +32,15 @@ stroykerbox/test_email/
 !/stroykerbox/settings/dev.py
 !/stroykerbox/settings/constance.py
 !/stroykerbox/settings/base.py
+
+# Local Docker (не пушить — только для разработки на ноутбуке)
+dc/docker-compose-luciano.local.yml
+dc/*.local.yml
+Dockerfile-dev.local
+docker_data_local/
+stroykerbox/settings/constants_local.py
+dc/LOGS_README.md
+.env.local
+.env*.local
+constance_dump.json
+stroykerbox/apps/utils/fixtures/constance_dump.json
