@@ -792,11 +792,11 @@ footer::before {
   pointer-events: none;
   z-index: 0;
   background-color: #f0e5e5;
-  mask-image: url("/static/images/luciano_logo.svg");
+  mask-image: url("/static/8march_design/images/luciano_logo.svg");
   mask-size: 100% auto;
   mask-position: center bottom;
   mask-repeat: no-repeat;
-  -webkit-mask-image: url("/static/images/luciano_logo.svg");
+  -webkit-mask-image: url("/static/8march_design/images/luciano_logo.svg");
   -webkit-mask-size: 100% auto;
   -webkit-mask-position: center bottom;
   -webkit-mask-repeat: no-repeat;
@@ -804,8 +804,8 @@ footer::before {
 
 @media (max-width: 767px) {
   footer::before {
-    mask-image: url("/static/images/luciano_logo_90.svg");
-    -webkit-mask-image: url("/static/images/luciano_logo_90.svg");
+    mask-image: url("/static/8march_design/images/luciano_logo_90.svg");
+    -webkit-mask-image: url("/static/8march_design/images/luciano_logo_90.svg");
     mask-size: auto 100%;
     -webkit-mask-size: auto 100%;
     mask-position: right center;

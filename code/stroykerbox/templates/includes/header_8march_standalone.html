@@ -1,6 +1,4 @@
 {% load static %}
-{# Хэдер 8march для тестовой страницы. Данные из context (header_phone, cart_count, header_logo_url).
-   Для всех страниц позже: использовать includes/header_8march.html с тегами заказчика. #}
 <section class="__header __header--8march header-8march">
     <div class="header-8march__bar">
         <div class="header-8march__left">
@@ -39,7 +37,7 @@
         </div>
     </div>
     <button type="button" class="catalog-btn catalog-btn--hidden-trigger" aria-hidden="true" tabindex="-1"></button>
-    <div class="catalog-box">
+    <div class="catalog-box header-8march__catalog-dropdown" aria-hidden="true">
         <div class="container">
             <ul class="link--arrow-right">
                 <li><a href="{% url 'catalog:index' %}">Готовая витрина</a></li>
@@ -51,15 +49,33 @@
         </div>
     </div>
 </section>
+<style>
+/* Выпадающий список каталога скрыт по умолчанию, показывается по клику на МЕНЮ (как на luciano-site-light). */
+.header-8march .header-8march__catalog-dropdown {
+  display: none;
+}
+.header-8march.is-catalog-open .header-8march__catalog-dropdown {
+  display: block;
+}
+</style>
 <script>
 (function() {
+  function toggleCatalog(header, open) {
+    if (!header) return;
+    header.classList.toggle('is-catalog-open', open);
+    var drop = header.querySelector('.header-8march__catalog-dropdown');
+    if (drop) drop.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
   document.addEventListener('click', function(e) {
     var trigger = e.target && e.target.closest && e.target.closest('[data-catalog-trigger]');
-    if (trigger) {
+    var header = trigger && trigger.closest('section.header-8march');
+    if (trigger && header) {
       e.preventDefault();
-      var header = trigger.closest('section.header-8march');
-      var btn = header && header.querySelector('.catalog-btn');
-      if (btn) btn.click();
+      var isOpen = header.classList.contains('is-catalog-open');
+      toggleCatalog(header, !isOpen);
+    } else {
+      var openHeader = document.querySelector('section.header-8march.is-catalog-open');
+      if (openHeader) toggleCatalog(openHeader, false);
     }
   });
 })();

@@ -869,11 +869,11 @@ section.feedback-form button {
   height: 100%;
   z-index: 0;
   background-color: #CFDCAB;
-  mask-image: url("/static/images/luciano_logo.svg");
+  mask-image: url("/static/8march_design/images/luciano_logo.svg");
   mask-size: 100% auto;
   mask-repeat: no-repeat;
   mask-position: center bottom;
-  -webkit-mask-image: url("/static/images/luciano_logo.svg");
+  -webkit-mask-image: url("/static/8march_design/images/luciano_logo.svg");
   -webkit-mask-size: 100% auto;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center bottom;
