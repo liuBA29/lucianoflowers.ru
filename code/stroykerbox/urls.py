@@ -84,11 +84,25 @@ urlpatterns = [
     path('content-check/', StaffCheckPage.as_view(), name='staff-check-page'),
     path('dash/', DashboardPage.as_view(), name='dashboard'),
     # Тестовая страница для проверки деплоя у заказчика. Удалить после запуска нового дизайна.
-    path('8march_design/', lambda r: HttpResponse(
-        '<!DOCTYPE html><html><head><meta charset="utf-8"><title>8 марта</title></head>'
-        '<body><p>Здесь будет новый дизайн главной страницы.</p></body></html>',
-        content_type='text/html; charset=utf-8',
-    ), name='8march-design-test'),
+    path(
+        '8march_design/',
+        lambda r: HttpResponse(
+            '''
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <title>8 марта — тестовый новый дизайн</title>
+              </head>
+              <body>
+                <p>Здесь будет новый дизайн главной страницы. Эта страница нужна только для тестового развёртывания и будет удалена перед запуском итогового варианта.</p>
+              </body>
+            </html>
+            ''',
+            content_type='text/html; charset=utf-8',
+        ),
+        name='8march-design-test',
+    ),
 ]
 
 if 'stroykerbox.apps.portfolio' in settings.INSTALLED_APPS:
