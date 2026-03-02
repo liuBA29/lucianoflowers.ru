@@ -33,7 +33,7 @@ stroykerbox/test_email/
 !/stroykerbox/settings/constance.py
 !/stroykerbox/settings/base.py
 
-# Local Docker (не пушить — только для разработки на ноутбуке)
+# Local Docker и тестовый деплой (не пушить — только для разработки на ноутбуке)
 dc/docker-compose-luciano.local.yml
 dc/*.local.yml
 Dockerfile-dev.local

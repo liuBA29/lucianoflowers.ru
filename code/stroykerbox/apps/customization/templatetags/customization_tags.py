@@ -191,7 +191,11 @@ def render_header(context, **kwargs):
     return context
 
 
-    # Fallback при пустом CUSTOM_MOBILE_HEADER_ID — см. комментарий выше.
+@register.inclusion_tag('custom_headers/header-mobile-base.html', takes_context=True)
+def render_mobile_header(context, **kwargs):
+    context['cart'] = context.get('cart', Cart.from_request(context['request']))
+
+    # Fallback при пустом CUSTOM_MOBILE_HEADER_ID — см. комментарий в render_header.
     context['current_mobile_header_template'] = (
         f'custom_headers/header-mobile-{config.CUSTOM_MOBILE_HEADER_ID or "1"}.html'
     )
