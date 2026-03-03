@@ -20,6 +20,7 @@ from stroykerbox.apps.addresses.views import ContactsPageView
 from stroykerbox.apps.utils.views import clear_cache, clear_thumbnail_cache
 from stroykerbox.apps.search.views import SearchResult
 from stroykerbox.apps.common.views import StaffCheckPage, DashboardPage
+from stroykerbox.apps.crm.forms import FeedbackMessageForm
 
 YML_URL = getattr(config, 'YML_URL', 'catalog_export.yml') or 'catalog_export.yml'
 
@@ -46,6 +47,7 @@ def view_8march_design_test(request):
         'footer_phone': header_phone or None,
         'footer_contacts': footer_contacts or None,
         'footer_logo_url': footer_logo_url or None,
+        'feedback_form': FeedbackMessageForm(),
     })
 
 

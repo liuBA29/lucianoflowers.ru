@@ -15,6 +15,7 @@
 .page-index-8march .index-promo-8march__title,
 .page-index-8march .index-bouquets-8march__title,
 .page-index-8march .index-social-8march__title,
+.page-index-8march .index-8march-questions-wrap__title,
 .page-index-8march .index-reviews-8march__title {
   font-family: var(--8march-font-heading, 'Inter', system-ui, sans-serif);
   font-weight: var(--8march-heading-weight, 600);
@@ -28,6 +29,7 @@
 .page-index-8march .index-promo-8march__title,
 .page-index-8march .index-bouquets-8march__title,
 .page-index-8march .index-social-8march__title,
+.page-index-8march .index-8march-questions-wrap__title,
 .page-index-8march .index-reviews-8march__title,
 .page-index-8march .index-info-8march__heading,
 .page-index-8march .index-hero-8march__text {
@@ -255,7 +257,7 @@ section.feedback-form button {
   align-items: flex-start;
   justify-content: center;
   padding: 2rem 2rem 2rem 8.25rem;
-  background-color: #e8e0d5;
+  background-color: #F9F3EE;
   color: #2d2d2d;
   position: relative;
   overflow: visible;
@@ -270,7 +272,7 @@ section.feedback-form button {
   letter-spacing: 0.02em;
 }
 
-/* Кнопка В КАТАЛОГ — чёрная, как в эталоне */
+/* Кнопка В КАТАЛОГ — чёрная, как в эталоне (8MARCH_DESIGN_TEMPLATES.md §8: без скруглений) */
 .page-index-8march .index-hero-8march__right .index-hero-8march__btn,
 .index-hero-8march__btn {
   display: inline-block;
@@ -281,7 +283,7 @@ section.feedback-form button {
   background-color: #1a1a1a !important;
   background: #1a1a1a !important;
   border: none;
-  border-radius: 0;
+  border-radius: 0 !important;
   text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease;
   text-transform: uppercase;
@@ -406,13 +408,16 @@ section.feedback-form button {
   height: 100%;
 }
 
-/* В зоне вектора секции без фона — дуга видна сквозь них (зона только до конца акций) */
+/* В зоне вектора секции без фона — дуга видна сквозь них (зона только до конца акций). Правый блок героя с текстом «ДОСТАВКА ЦВЕТОВ И БУКЕТОВ» — с бежевым фоном, не прозрачный. */
 .index-8march-vector-zone .index-hero-8march,
-.index-8march-vector-zone .index-hero-8march .index-hero-8march__right,
 .index-8march-vector-zone .index-categories-8march,
 .index-8march-vector-zone .index-promo-8march {
   background: transparent;
   background-color: transparent;
+}
+.index-8march-vector-zone .index-hero-8march .index-hero-8march__right {
+  background-color: #F9F3EE !important;
+  background: #F9F3EE !important;
 }
 .index-8march__diagonal-line {
   position: absolute;

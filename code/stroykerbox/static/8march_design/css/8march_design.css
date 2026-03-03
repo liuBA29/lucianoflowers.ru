@@ -117,19 +117,12 @@
   }
 }
 
-/* 8march: первая колонка футера с логотипом — показывать (глобально она скрыта) */
+/* 8march: первая колонка футера (телефон, лого) — скрыть, как в макете; каталог и остальное идут с начала */
 .footer--8march .footer-first-column {
-  display: flex !important;
-  flex-direction: column;
-  align-items: flex-start;
+  display: none !important;
 }
-.footer--8march .footer-first-column .footer--8march__logo--desktop {
+.footer--8march .footer-bottom__left {
   display: block !important;
-}
-@media (max-width: 767px) {
-  .footer--8march .footer-first-column .footer--8march__logo--desktop {
-    display: none !important;
-  }
 }
 button,
 .btn,
@@ -195,7 +188,7 @@ section.__header {
 section.__header.__header--8march,
 section.__header.__header--8march.header-8march,
 .header-8march {
-  background-color: #CFDCAB !important;
+  background-color: #ffffff !important;
 }
 
 /* 8march: хедер на всю ширину экрана */
@@ -207,10 +200,10 @@ section.__header.__header--8march.header-8march {
   box-sizing: border-box;
 }
 
-/* ========== 8march: самописный хеддер (флекс, без Bootstrap-сетки) ========== */
+/* ========== 8march: самописный хеддер (флекс, без Bootstrap-сетки), фон белый ========== */
 .header-8march {
   position: relative;
-  background-color: #CFDCAB !important;
+  background-color: #ffffff !important;
 }
 .header-8march__bar {
   display: flex;
@@ -1194,6 +1187,16 @@ section.feedback-form .feedback-form__callme-btn:hover {
     margin-bottom: 1rem;
     align-items: flex-start;
   }
+}
+
+/* Обёртка «Остались вопросы?» на 8march: один видимый заголовок, дубликат из тега скрыт */
+.index-8march-questions-wrap__title {
+  margin: 0 0 1rem 0;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+.index-8march-questions-wrap section.feedback-form .content-title.h2,
+.index-8march-questions-wrap section.feedback-form .content-title.center.h2 {
+  display: none !important;
 }
 
 
