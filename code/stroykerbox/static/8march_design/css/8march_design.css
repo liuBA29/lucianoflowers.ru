@@ -164,11 +164,11 @@ a,
   transition: color 0.2s ease, opacity 0.2s ease !important;
 }
 
-/* Карточки товаров — лёгкая тень, без розовой подсветки при наведении */
+/* Карточки товаров — лёгкая тень, без розовой подсветки при наведении (квадратики героя с логотипом и «8 марта» не трогаем) */
 .product-teaser,
 .product-preview,
 [class*="product-preview"],
-[class*="card"] {
+[class*="card"]:not(.index-hero-8march__logo-box):not(.index-hero-8march__8march-card) {
   border-radius: 16px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
   transition: box-shadow 0.25s ease, transform 0.2s ease !important;
@@ -176,11 +176,11 @@ a,
 .product-teaser:hover,
 .product-preview:hover,
 [class*="product-preview"]:hover,
-[class*="card"]:hover {
+[class*="card"]:not(.index-hero-8march__logo-box):not(.index-hero-8march__8march-card):hover {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Шапка — по умолчанию белая; 8march — цвет #CFDCAB (как футер и водный знак) */
+/* Шапка 8march — белая; зелёный только у кружка с цифрой корзины */
 header,
 section.__header {
   background-color: #ffffff !important;
@@ -283,6 +283,11 @@ section.__header.__header--8march.header-8march {
 }
 .header-8march__label--catalog {
   margin-left: 0.125rem;
+  text-decoration: none !important;
+}
+.header-8march__label--catalog:hover,
+.header-8march__label--catalog:focus {
+  text-decoration: none !important;
 }
 /* Центр: логотип в хэдере */
 .header-8march__center {

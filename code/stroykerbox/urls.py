@@ -6,6 +6,7 @@ from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 
 from rest_framework.authtoken import views
 from filebrowser.sites import site
@@ -21,6 +22,7 @@ from stroykerbox.apps.utils.views import clear_cache, clear_thumbnail_cache
 from stroykerbox.apps.search.views import SearchResult
 from stroykerbox.apps.common.views import StaffCheckPage, DashboardPage
 from stroykerbox.apps.crm.forms import FeedbackMessageForm
+from stroykerbox.apps.catalog.models import Category
 
 YML_URL = getattr(config, 'YML_URL', 'catalog_export.yml') or 'catalog_export.yml'
 
@@ -40,6 +42,27 @@ def view_8march_design_test(request):
         footer_contacts = getattr(config, 'MAIL__FOOTER_CONTACTS', None) or ''
     except Exception:
         pass
+    # Корневые категории каталога по порядку — для блока с овальными картинками (Готовая витрина, Моно букеты и т.д.)
+    categories_qs = Category.objects.filter(published=True, level=0).order_by('tree_id', 'lft')[:6]
+    categories_list = list(categories_qs)
+    # Фиксированные картинки и подписи для 6 слотов; ссылка — на соответствующую категорию или каталог
+    category_slots = (
+        ('1.png', 'Готовая витрина', 'ГОТОВАЯ<br>ВИТРИНА'),
+        ('2.png', 'Моно букеты', 'МОНО<br>БУКЕТЫ'),
+        ('4.png', 'Авторские букеты', 'АВТОРСКИЕ<br>БУКЕТЫ'),
+        ('5.png', 'Композиции', 'КОМПОЗИЦИИ'),
+        ('6.png', 'Подарки', 'ПОДАРКИ'),
+        ('8.png', 'Букет по желанию', 'БУКЕТ ПО<br>ЖЕЛАНИЮ'),
+    )
+    categories_8march = []
+    for i, (img, alt, label) in enumerate(category_slots):
+        url = categories_list[i].get_absolute_url() if i < len(categories_list) else reverse('catalog:index')
+        categories_8march.append({
+            'url': url,
+            'image': '8march_design/images/LUCIANO/' + img,
+            'alt': alt,
+            'label': label,
+        })
     return render(request, '8march_design_test.html', {
         'cart_count': cart_count,
         'header_phone': header_phone or None,
@@ -48,6 +71,7 @@ def view_8march_design_test(request):
         'footer_contacts': footer_contacts or None,
         'footer_logo_url': footer_logo_url or None,
         'feedback_form': FeedbackMessageForm(),
+        'categories_8march': categories_8march,
     })
 
 

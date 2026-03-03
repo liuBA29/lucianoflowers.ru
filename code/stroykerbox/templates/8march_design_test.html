@@ -7,8 +7,9 @@
   <title>8 марта — тестовый новый дизайн | LUCIANO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- По эталону luciano-site-light и 8MARCH_DESIGN_TEMPLATES.md §7: Inter, Cormorant Garamond, Geologica, Roboto -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;500;700&family=Geologica:wght@400&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <!-- Шрифты: Inter, Cormorant Garamond (300,500,700), Geologica, Roboto -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700&family=Geologica:wght@400&family=Roboto:wght@300&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700&family=Geologica:wght@400&family=Roboto:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static '8march_design/css/8march_base.css' %}">
   <link rel="stylesheet" href="{% static '8march_design/css/8march_design.css' %}">
   <link rel="stylesheet" href="{% static '8march_design/css/8march_index_page_design.css' %}">
@@ -26,67 +27,77 @@
             </svg>
           </div>
 
-          <section class="index-hero-8march">
-            <div class="index-hero-8march__inner">
-              <div class="index-hero-8march__left">
-                <img src="{% static '8march_design/images/LUCIANO/1.png' %}" alt="" class="index-hero-8march__img" role="presentation">
-                <div class="index-hero-8march__logo-box">
-                  <img src="{% static '8march_design/images/LUCIANO/Logo.svg' %}" alt="LUCIANO" class="index-hero-8march__logo">
+          <section class="index-hero-8march" aria-roledescription="carousel" aria-label="Промо-баннеры">
+            <div class="index-hero-8march__slides">
+              <div class="index-hero-8march__track" id="hero-carousel-track">
+                <div class="index-hero-8march__slide" data-hero-slide="0">
+                  <div class="index-hero-8march__inner">
+                    <div class="index-hero-8march__left">
+                      <img src="{% static '8march_design/images/LUCIANO/1.png' %}" alt="" class="index-hero-8march__img" role="presentation">
+                      <div class="index-hero-8march__logo-box">
+                        <img src="{% static '8march_design/images/LUCIANO/Logo.svg' %}" alt="LUCIANO" class="index-hero-8march__logo">
+                      </div>
+                    </div>
+                    <div class="index-hero-8march__right">
+                      <p class="index-hero-8march__text">ДОСТАВКА ЦВЕТОВ<br>И БУКЕТОВ</p>
+                      <a href="{% url 'catalog:index' %}" class="index-hero-8march__btn">В КАТАЛОГ</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="index-hero-8march__slide" data-hero-slide="1">
+                  <div class="index-hero-8march__inner">
+                    <div class="index-hero-8march__left">
+                      <img src="{% static 'images/8march_rect.png' %}" alt="8 марта" class="index-hero-8march__img" role="presentation">
+                      <div class="index-hero-8march__8march-card">
+                        <img src="{% static '8march_design/images/LUCIANO/Logo.svg' %}" alt="LUCIANO" class="index-hero-8march__logo">
+                        <span class="index-hero-8march__8march-number index-hero-8march__8march-number--image-fill" style="background-image: url('{% static 'images/8march_rect.png' %}');">8</span>
+                        <span class="index-hero-8march__8march-month index-hero-8march__8march-month--image-fill" style="background-image: url('{% static 'images/8march_rect.png' %}');">марта</span>
+                        <!-- Слоган: 1-я строка «Скажите цветами то, что», 2-я «невозможно выразить словами» — не менять без явного указания -->
+                        <p class="index-hero-8march__8march-slogan">Скажите цветами то, что<br>невозможно выразить словами</p>
+                      </div>
+                    </div>
+                    <div class="index-hero-8march__right">
+                      <!-- Перенос «ДЛЯ НЕЕ» на новую строку — не менять без явного указания -->
+                      <p class="index-hero-8march__text">БУКЕТЫ СПЕЦИАЛЬНО<br>ДЛЯ НЕЕ</p>
+                      <p class="index-hero-8march__subtext">СКИДКА 10%</p>
+                      <a href="{% url 'catalog:category' '8-marta' %}" class="index-hero-8march__btn">ВЫБРАТЬ БУКЕТ</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="index-hero-8march__slide" data-hero-slide="2">
+                  <div class="index-hero-8march__inner">
+                    <div class="index-hero-8march__left">
+                      <img src="{% static 'images/tender_flowers_rect.png' %}" alt="Свадебные букеты" class="index-hero-8march__img" role="presentation">
+                    </div>
+                    <div class="index-hero-8march__right">
+                      <p class="index-hero-8march__text">СВАДЕБНЫЕ БУКЕТЫ</p>
+                      <p class="index-hero-8march__subtext">СКИДКА 30%</p>
+                      <a href="{% url 'catalog:index' %}" class="index-hero-8march__btn">ВЫБРАТЬ БУКЕТ</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="index-hero-8march__right">
-                <p class="index-hero-8march__text">ДОСТАВКА ЦВЕТОВ<br>И БУКЕТОВ</p>
-                <a href="{% url 'catalog:index' %}" class="index-hero-8march__btn">В КАТАЛОГ</a>
-                <div class="index-hero-8march__nav" aria-hidden="true">
-                  <button type="button" class="index-hero-8march__arrow index-hero-8march__arrow--prev" title="Назад" aria-label="Назад">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-                  </button>
-                  <button type="button" class="index-hero-8march__arrow index-hero-8march__arrow--next" title="Вперёд" aria-label="Вперёд">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-                  </button>
-                </div>
-              </div>
+            </div>
+            <div class="index-hero-8march__nav" aria-hidden="true">
+              <button type="button" class="index-hero-8march__arrow index-hero-8march__arrow--prev" title="Назад" aria-label="Предыдущий слайд">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button type="button" class="index-hero-8march__arrow index-hero-8march__arrow--next" title="Вперёд" aria-label="Следующий слайд">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
             </div>
           </section>
 
           <section class="index-categories-8march">
             <div class="index-categories-8march__inner">
-              <a href="{% url 'catalog:index' %}" class="index-categories-8march__item">
+              {% for item in categories_8march %}
+              <a href="{{ item.url }}" class="index-categories-8march__item">
                 <span class="index-categories-8march__img-wrap">
-                  <img src="{% static '8march_design/images/LUCIANO/1.png' %}" alt="Готовая витрина" class="index-categories-8march__img">
+                  <img src="{% static item.image %}" alt="{{ item.alt }}" class="index-categories-8march__img">
                 </span>
-                <span class="index-categories-8march__label">ГОТОВАЯ<br>ВИТРИНА</span>
+                <span class="index-categories-8march__label">{{ item.label|safe }}</span>
               </a>
-              <a href="{% url 'catalog:index' %}" class="index-categories-8march__item">
-                <span class="index-categories-8march__img-wrap">
-                  <img src="{% static '8march_design/images/LUCIANO/2.png' %}" alt="Моно букеты" class="index-categories-8march__img">
-                </span>
-                <span class="index-categories-8march__label">МОНО<br>БУКЕТЫ</span>
-              </a>
-              <a href="{% url 'catalog:index' %}" class="index-categories-8march__item">
-                <span class="index-categories-8march__img-wrap">
-                  <img src="{% static '8march_design/images/LUCIANO/4.png' %}" alt="Категория" class="index-categories-8march__img">
-                </span>
-                <span class="index-categories-8march__label">АВТОРСКИЕ<br>БУКЕТЫ</span>
-              </a>
-              <a href="{% url 'catalog:index' %}" class="index-categories-8march__item">
-                <span class="index-categories-8march__img-wrap">
-                  <img src="{% static '8march_design/images/LUCIANO/5.png' %}" alt="Категория" class="index-categories-8march__img">
-                </span>
-                <span class="index-categories-8march__label">КОМПОЗИЦИИ</span>
-              </a>
-              <a href="{% url 'catalog:index' %}" class="index-categories-8march__item">
-                <span class="index-categories-8march__img-wrap">
-                  <img src="{% static '8march_design/images/LUCIANO/6.png' %}" alt="Категория" class="index-categories-8march__img">
-                </span>
-                <span class="index-categories-8march__label">ПОДАРКИ</span>
-              </a>
-              <a href="{% url 'catalog:index' %}" class="index-categories-8march__item">
-                <span class="index-categories-8march__img-wrap">
-                  <img src="{% static '8march_design/images/LUCIANO/8.png' %}" alt="Категория" class="index-categories-8march__img">
-                </span>
-                <span class="index-categories-8march__label">БУКЕТ ПО<br>ЖЕЛАНИЮ</span>
-              </a>
+              {% endfor %}
             </div>
             <div class="index-categories-8march__nav" aria-hidden="true">
               <button type="button" class="index-categories-8march__arrow index-categories-8march__arrow--prev" title="Назад"></button>
@@ -444,6 +455,22 @@
   </div>
 
   <script src="{% static '8march_design/js/8march_carousel.js' %}"></script>
+  <script>
+  (function() {
+    var totalHeroSlides = 3;
+    var heroTrack = document.getElementById('hero-carousel-track');
+    var heroSection = heroTrack && heroTrack.closest('.index-hero-8march');
+    var heroPrev = heroSection && heroSection.querySelector('.index-hero-8march__arrow--prev');
+    var heroNext = heroSection && heroSection.querySelector('.index-hero-8march__arrow--next');
+    var heroIndex = 0;
+    function setHeroSlide(i) {
+      heroIndex = Math.max(0, Math.min(i, totalHeroSlides - 1));
+      if (heroTrack) heroTrack.style.transform = 'translateX(-' + (heroIndex * 100 / totalHeroSlides) + '%)';
+    }
+    if (heroPrev) heroPrev.addEventListener('click', function() { setHeroSlide(heroIndex - 1); });
+    if (heroNext) heroNext.addEventListener('click', function() { setHeroSlide(heroIndex + 1); });
+  })();
+  </script>
   <script>
   (function() {
     function init() {
