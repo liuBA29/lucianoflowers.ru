@@ -7,16 +7,27 @@
  * Селекторы лучше вешать на .frontpage или .page-index-8march, чтобы не задеть внутренние страницы.
  */
 
+/* Единый отступ между рубриками главной 8march */
+.page-index-8march {
+  --8march-section-gap: 4rem;
+}
+.page-index-8march .index-8march-vector-zone > section + section {
+  margin-top: var(--8march-section-gap) !important;
+}
+.page-index-8march .index-8march-content > .index-8march-vector-zone + * {
+  margin-top: var(--8march-section-gap) !important;
+}
+.page-index-8march .index-8march-content > section + section,
+.page-index-8march .index-8march-content > section + div {
+  margin-top: var(--8march-section-gap) !important;
+}
+
 /* --- Типографика по эталону Figma ---
  * Заголовки секций: sans-serif, полужирный, ВЕРХНИЙ РЕГИСТР, увеличенный letter-spacing.
  * Подписи категорий, кнопки: sans-serif, полужирный/обычный, ВЕРХНИЙ РЕГИСТР.
  * Описания: sans-serif, regular. Цены: актуальная — bold, старая — regular + зачёркивание + серый.
  */
-.page-index-8march .index-promo-8march__title,
-.page-index-8march .index-bouquets-8march__title,
-.page-index-8march .index-social-8march__title,
-.page-index-8march .index-8march-questions-wrap__title,
-.page-index-8march .index-reviews-8march__title {
+.page-index-8march .index-social-8march__title {
   font-family: var(--8march-font-heading, 'Inter', system-ui, sans-serif);
   font-weight: var(--8march-heading-weight, 600);
   letter-spacing: var(--8march-heading-letter-spacing, 0.05em);
@@ -25,12 +36,25 @@
   text-align: left;
 }
 
-/* Заголовки секций главной 8march — Roboto Light */
-.page-index-8march .index-promo-8march__title,
-.page-index-8march .index-bouquets-8march__title,
+/* Крупные заголовки секций: АКЦИИ, СБОРНЫЕ БУКЕТЫ, ОТЗЫВЫ, ГДЕ МЫ НАХОДИМСЯ (и аналоги) */
+.big-title {
+  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
+  font-weight: 300 !important;
+  font-size: 48px !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  text-align: left;
+  color: #000000 !important;
+  margin: 0 auto 1.5rem;
+  max-width: 1200px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  box-sizing: border-box;
+}
+
+/* Заголовки секций главной 8march — Roboto Light (кроме .big-title: АКЦИИ, СБОРНЫЕ БУКЕТЫ, ОТЗЫВЫ, ГДЕ МЫ НАХОДИМСЯ) */
 .page-index-8march .index-social-8march__title,
-.page-index-8march .index-8march-questions-wrap__title,
-.page-index-8march .index-reviews-8march__title,
 .page-index-8march .index-info-8march__heading,
 .page-index-8march .index-hero-8march__text {
   font-family: 'Roboto', sans-serif;
@@ -495,12 +519,9 @@ section.feedback-form button {
   color: #2d2d2d;
 }
 
-/* Кнопка В КАТАЛОГ — чёрная, как в эталоне (8MARCH_DESIGN_TEMPLATES.md §8: без скруглений) */
-.page-index-8march .index-hero-8march__right .index-hero-8march__btn,
-.index-hero-8march__btn {
+/* Общий стиль чёрных кнопок (В КАТАЛОГ, ВЫБРАТЬ БУКЕТ, ОТПРАВИТЬ) */
+.black-button {
   display: inline-block;
-  padding: 0.875rem 2rem;
-  font-size: 1rem;
   font-weight: 600;
   color: #fff !important;
   background-color: #1a1a1a !important;
@@ -512,12 +533,17 @@ section.feedback-form button {
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-
-.page-index-8march .index-hero-8march__right .index-hero-8march__btn:hover,
-.index-hero-8march__btn:hover {
+.black-button:hover {
   background-color: #2d2d2d !important;
   background: #2d2d2d !important;
   color: #FBE3E1 !important;
+}
+
+/* Кнопка В КАТАЛОГ / ВЫБРАТЬ БУКЕТ в герое — размеры */
+.page-index-8march .index-hero-8march__right .index-hero-8march__btn,
+.index-hero-8march__btn {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
 }
 
 /* Стрелочки промотки внизу справа героя — как в акциях: нежный розовый круг без рамки */
@@ -668,7 +694,6 @@ section.feedback-form button {
   width: 100%;
   background: #fff;
   padding: 2rem 0;
-  margin-top: 3rem;
   position: relative;
   z-index: 1;
 }
@@ -831,19 +856,6 @@ section.feedback-form button {
 .index-promo-8march__title {
   position: relative;
   z-index: 1;
-  margin: 0 auto 1.5rem;
-  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
-  font-weight: 300 !important;
-  font-size: 48px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  text-transform: uppercase !important;
-  text-align: left;
-  color: #000000 !important;
-  max-width: 1200px;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  box-sizing: border-box;
 }
 
 .index-promo-8march__carousel-wrap {
@@ -981,7 +993,14 @@ section.feedback-form button {
   color: #2d2d2d;
 }
 
-.index-promo-8march__btn {
+.index-promo-8march__card:hover {
+  box-shadow: none !important;
+}
+.index-promo-8march__card--large:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+}
+/* Общий стиль бежевых кнопок в карточках (ПОДРОБНЕЕ, В КОРЗИНУ, УЗНАТЬ ЦЕНУ) */
+.beige_button {
   display: inline-block;
   padding: 0.5rem 1.25rem;
   font-size: 0.8rem;
@@ -994,16 +1013,13 @@ section.feedback-form button {
   color: #2d2d2d;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-
-.index-promo-8march__card:hover {
-  box-shadow: none !important;
-}
-.index-promo-8march__card--large:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
-}
-.index-promo-8march__card:hover .index-promo-8march__btn {
+.beige_button:hover {
   background: #f5d5d3;
   color: #2d2d2d;
+}
+
+.index-promo-8march__btn {
+  /* размеры унаследованы от .beige_button */
 }
 
 .index-promo-8march__arrow {
@@ -1061,7 +1077,7 @@ section.feedback-form button {
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: #B8736E !important;
+  color: #2d2d2d !important;
   border: none !important;
   border-radius: 0;
   -webkit-border-radius: 0;
@@ -1077,7 +1093,6 @@ section.feedback-form button {
 .index-promo-8march__btn-catalog:hover {
   background: #f5d5d3 !important;
   background-color: #f5d5d3 !important;
-  color: #a06660 !important;
 }
 
 @media (max-width: 767px) {
@@ -1316,25 +1331,8 @@ section.feedback-form button {
 
 /* --- Секция СБОРНЫЕ БУКЕТЫ (эталон: сетка карточек, квадратные фото как в акциях) --- */
 .index-bouquets-8march {
-  margin-top: 4rem;
   padding: 2rem 0 2.5rem;
   background: #fff;
-}
-
-.index-bouquets-8march__title {
-  margin: 0 auto 1.5rem;
-  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
-  font-weight: 300 !important;
-  font-size: 48px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  text-transform: uppercase !important;
-  text-align: left;
-  color: #000000 !important;
-  max-width: 1200px;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  box-sizing: border-box;
 }
 
 /* Карусель сборных букетов (общий скрипт 8march_carousel.js) */
@@ -1534,24 +1532,6 @@ section.feedback-form button {
   color: #2d2d2d;
 }
 
-.index-bouquets-8march__btn {
-  display: inline-block;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: #2d2d2d;
-  background: #e8e0d5;
-  border: none;
-  border-radius: 0 !important;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.index-bouquets-8march__card:hover .index-bouquets-8march__btn {
-  background: #f5d5d3;
-  color: #2d2d2d;
-}
-
 .index-bouquets-8march__btn--alt {
   margin-top: 0.25rem;
 }
@@ -1570,7 +1550,7 @@ section.feedback-form button {
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: #B8736E !important;
+  color: #2d2d2d !important;
   border: none !important;
   border-radius: 0;
   -webkit-border-radius: 0;
@@ -1586,7 +1566,6 @@ section.feedback-form button {
 .index-bouquets-8march__btn-catalog:hover {
   background: #f5d5d3 !important;
   background-color: #f5d5d3 !important;
-  color: #a06660 !important;
 }
 
 @media (min-width: 768px) {
@@ -1690,7 +1669,9 @@ section.feedback-form button {
 /* --- Блок «Букет по вашим желаниям»: слева 8.png, справа форма --- */
 .index-bouquet-wish-8march {
   width: 100%;
-  margin: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
   padding: 0;
 }
 
@@ -1792,8 +1773,8 @@ section.feedback-form button {
   height: 20px;
 }
 
-/* Все поля формы — без скруглений (имя, телефон, дата, пожелания) */
-.index-bouquet-wish-8march__form input,
+/* Все поля формы — без скруглений (имя, телефон, дата, пожелания); чекбокс .green-checkbox не трогаем */
+.index-bouquet-wish-8march__form input:not(.green-checkbox):not(.white-checkbox),
 .index-bouquet-wish-8march__form textarea,
 .index-bouquet-wish-8march__input {
   border-radius: 0 !important;
@@ -1832,33 +1813,21 @@ section.feedback-form button {
 }
 
 .index-bouquet-wish-8march__textarea {
-  resize: vertical;
-  min-height: 80px;
+  resize: none;
+  min-height: 0;
+  height: 2.6rem;
   border: none;
   border-radius: 0 !important;
 }
 
 .index-bouquet-wish-8march__submit {
-  display: block;
-  width: 100%;
+  width: auto;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
-  padding: 0.75rem 1.25rem;
+  padding: 0.6rem 1.5rem;
   font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: #fff;
-  background: #363533;
-  border: none;
-  border-radius: 0 !important;
   cursor: pointer;
   outline: none;
-  transition: background-color 0.2s ease;
-}
-
-.index-bouquet-wish-8march__submit:hover {
-  background: #4a4846;
-  color: #fff;
 }
 
 .index-bouquet-wish-8march .form-group.privacy-policy {
@@ -1869,6 +1838,75 @@ section.feedback-form button {
 
 .index-bouquet-wish-8march .form-group.privacy-policy label {
   cursor: pointer;
+}
+
+/* Класс зелёного чекбокса — скруглённый квадрат, при отмеченном состоянии зелёный фон и белая галочка */
+.green-checkbox {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  -webkit-border-radius: 6px !important;
+  background: #e8e6e4 !important;
+  cursor: pointer;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: background-color 0.2s ease;
+}
+.green-checkbox:checked {
+  background: #cfdcab !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M2 6 L5 9 L10 3'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 10px 10px !important;
+  border-radius: 6px !important;
+  -webkit-border-radius: 6px !important;
+}
+
+/* Класс белого чекбокса — скруглённый квадрат, белый фон; при отмеченном состоянии зелёный фон и белая галочка (как у .green-checkbox) */
+.white-checkbox {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 6px !important;
+  -webkit-border-radius: 6px !important;
+  background: #ffffff !important;
+  cursor: pointer;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.white-checkbox:checked {
+  background: #cfdcab !important;
+  border-color: #cfdcab !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M2 6 L5 9 L10 3'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 10px 10px !important;
+  border-radius: 6px !important;
+  -webkit-border-radius: 6px !important;
+}
+
+/* Чекбокс согласия в блоке «Букет по вашим желаниям» — использует .green-checkbox */
+.index-bouquet-wish-8march__agreement .checkbox {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+}
+.index-bouquet-wish-8march__agreement label {
+  margin: 0 !important;
+  font-size: 0.8rem !important;
+  color: #6b6363 !important;
 }
 
 @media (max-width: 767px) {
@@ -1904,8 +1942,9 @@ section.feedback-form button {
 
 .index-social-8march__title {
   margin: 0;
+  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
+  font-weight: 300 !important;
   font-size: 1.25rem;
-  font-weight: 700;
   letter-spacing: 0.02em;
   color: #2d2d2d;
   flex: 0 0 auto;
@@ -1925,19 +1964,21 @@ section.feedback-form button {
   gap: 1rem;
   flex-wrap: wrap;
   flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .index-social-8march__link {
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
+  font-weight: 300 !important;
+  font-size: 1.5rem;
   letter-spacing: 0.03em;
-  color: #2d2d2d;
+  color: #B8736E;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .index-social-8march__link:hover {
-  color: #5c4a4a;
+  color: #a06660;
 }
 
 /* --- ОТЗЫВЫ (эталон: карточка рейтинга, кнопка, список отзывов) --- */
@@ -1948,25 +1989,19 @@ section.feedback-form button {
 }
 
 .index-reviews-8march__title {
-  margin: 0 auto 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: left;
-  letter-spacing: 0.02em;
-  color: #2d2d2d;
-  max-width: 1200px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  box-sizing: border-box;
+  /* типографика — из .big-title; у секции ОТЗЫВЫ меньшие боковые отступы, заголовок по центру */
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  text-align: center !important;
 }
 
 .index-reviews-8march__card {
-  max-width: 720px;
-  margin: 0 auto 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
   padding: 1.5rem;
-  background: #fff;
+  background: #f5f5f5;
   border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -2056,11 +2091,9 @@ section.feedback-form button {
 
 .index-reviews-8march__list {
   list-style: none;
-  margin: 0;
-  padding: 0;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1.25rem 0 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .index-reviews-8march__item {
@@ -2108,7 +2141,8 @@ section.feedback-form button {
 
 .index-reviews-8march__more {
   text-align: center;
-  margin: 1.5rem 0 0;
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
 }
 
 .index-reviews-8march__more-link {
@@ -2120,4 +2154,94 @@ section.feedback-form button {
 .index-reviews-8march__more-link:hover {
   text-decoration: underline;
   color: #1d4ed8;
+}
+
+/* --- ГДЕ МЫ НАХОДИМСЯ: карта на весь экран + overlay-панель (эталон) --- */
+.index-8march-map-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+}
+
+.page-index-8march .index-8march-map-wrap .conditional-section.ya-map,
+.page-index-8march .index-8march-map-wrap section.ya-map {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  padding: 0;
+  margin: 0;
+}
+
+.page-index-8march .index-8march-map-wrap .wide-map,
+.page-index-8march .index-8march-map-wrap #yamap_addresses {
+  width: 100% !important;
+  height: 80vh !important;
+  min-height: 400px !important;
+}
+
+.index-8march-map-overlay {
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+  z-index: 2;
+  max-width: 340px;
+  padding: 1.5rem 1.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+}
+
+.index-8march-map-overlay .index-8march-questions-wrap__title {
+  margin: 0 0 1rem;
+  text-align: left;
+}
+
+.index-8march-map-overlay__address {
+  margin: 0 0 0.75rem;
+  font-family: var(--8march-font-body, 'Inter', system-ui, sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #2d2d2d;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.index-8march-map-overlay__phone {
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+}
+
+.index-8march-map-overlay__phone a {
+  color: #2d2d2d;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.index-8march-map-overlay__phone a:hover {
+  color: #5c4a4a;
+}
+
+.index-8march-map-overlay__btn {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .index-8march-map-overlay {
+    left: 1rem;
+    top: 1rem;
+    right: 1rem;
+    max-width: none;
+    padding: 1rem;
+  }
+  .page-index-8march .index-8march-map-wrap .wide-map,
+  .page-index-8march .index-8march-map-wrap #yamap_addresses {
+    height: 60vh !important;
+    min-height: 320px !important;
+  }
 }

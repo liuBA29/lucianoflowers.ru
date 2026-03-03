@@ -21,4 +21,12 @@
                           data-center-zoom="{{ center_zoom|stringformat:'f' }}"></div>
     {% include 'addresses/include/addresses-common.html' with map_container_id='yamap_addresses' %}
 </section>
+{% else %}
+<section class="conditional-section conditional-section_bg ya-map">
+    <div class="wide-map" id="yamap_addresses"
+         data-center-latitude="{{ center_latitude|stringformat:'f' }}"
+         data-center-longitude="{{ center_longitude|stringformat:'f' }}"
+         data-center-zoom="{{ center_zoom|stringformat:'f' }}"></div>
+    {% include 'addresses/include/addresses-common.html' with map_container_id='yamap_addresses' %}
+</section>
 {% endif %}
