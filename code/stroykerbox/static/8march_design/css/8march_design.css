@@ -141,7 +141,7 @@ a.button:hover,
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* Кнопки «СМОТРЕТЬ ВЕСЬ КАТАЛОГ» — нежный фон #FBE3E1, надпись цветом бывшего фона (розовый) */
+/* Кнопки «СМОТРЕТЬ ВЕСЬ КАТАЛОГ» — нежный фон #FBE3E1, надпись цветом бывшего фона (розовый), без скруглений */
 a.index-promo-8march__btn-catalog,
 a.index-bouquets-8march__btn-catalog {
   background: #FBE3E1 !important;
@@ -149,12 +149,21 @@ a.index-bouquets-8march__btn-catalog {
   background-image: none !important;
   color: #B8736E !important;
   border: none !important;
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
 }
 a.index-promo-8march__btn-catalog:hover,
 a.index-bouquets-8march__btn-catalog:hover {
   background: #f5d5d3 !important;
   background-color: #f5d5d3 !important;
   color: #a06660 !important;
+}
+
+/* Кнопки ПОДРОБНЕЕ на карточках акций — как в сборных букетах, без скруглений */
+.index-promo-8march__btn,
+.index-promo-8march__card .index-promo-8march__btn {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
 }
 
 /* Основные акцентные элементы — розовый тон */
@@ -164,11 +173,11 @@ a,
   transition: color 0.2s ease, opacity 0.2s ease !important;
 }
 
-/* Карточки товаров — лёгкая тень, без розовой подсветки при наведении (квадратики героя с логотипом и «8 марта» не трогаем) */
+/* Карточки товаров — лёгкая тень, без розовой подсветки при наведении (квадратики героя с логотипом и «8 марта» не трогаем). Карточки акций — без скруглений. */
 .product-teaser,
 .product-preview,
 [class*="product-preview"],
-[class*="card"]:not(.index-hero-8march__logo-box):not(.index-hero-8march__8march-card) {
+[class*="card"]:not(.index-hero-8march__logo-box):not(.index-hero-8march__8march-card):not(.index-promo-8march__card) {
   border-radius: 16px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
   transition: box-shadow 0.25s ease, transform 0.2s ease !important;
@@ -176,8 +185,14 @@ a,
 .product-teaser:hover,
 .product-preview:hover,
 [class*="product-preview"]:hover,
-[class*="card"]:not(.index-hero-8march__logo-box):not(.index-hero-8march__8march-card):hover {
+[class*="card"]:not(.index-hero-8march__logo-box):not(.index-hero-8march__8march-card):not(.index-promo-8march__card):hover {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Карточки акций и кнопка ПОДРОБНЕЕ — без скруглений */
+.index-promo-8march__card {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
 }
 
 /* Шапка 8march — белая; зелёный только у кружка с цифрой корзины */
@@ -1234,18 +1249,18 @@ img[src*="placeholder"],
   object-fit: cover !important;
   min-height: 0 !important;
 }
-/* Герой 8march: кнопки-стрелки перелистывания — заливка розовая, без ограничений заглушек */
+/* Герой 8march: кнопки-стрелки как в акциях — нежный розовый #FBE3E1 */
 .index-hero-8march .index-hero-8march__arrow,
 .index-hero-8march button.index-hero-8march__arrow {
-  background: #e8c4c4 !important;
-  background-color: #e8c4c4 !important;
-  border-color: #e8c4c4 !important;
+  background: #FBE3E1 !important;
+  background-color: #FBE3E1 !important;
+  border-color: #FBE3E1 !important;
 }
 .index-hero-8march .index-hero-8march__arrow:hover,
 .index-hero-8march button.index-hero-8march__arrow:hover {
-  background: #dfb4b4 !important;
-  background-color: #dfb4b4 !important;
-  border-color: #dfb4b4 !important;
+  background: #f5d5d2 !important;
+  background-color: #f5d5d2 !important;
+  border-color: #f5d5d2 !important;
 }
 /* Блоки-обёртки под картинки (hero, слайдеры) — нейтральный фон (без героя главной 8march: там своя картинка и квадратик с лого) */
 .section-dark.bg-image,

@@ -38,7 +38,7 @@
 }
 .page-index-8march .index-categories-8march__label,
 .page-index-8march .index-hero-8march__btn,
-.page-index-8march .index-promo-8march__btn-card,
+.page-index-8march .index-promo-8march__btn,
 .page-index-8march .index-promo-8march__btn-catalog,
 .page-index-8march .index-bouquets-8march__btn,
 .page-index-8march .index-bouquets-8march__btn-catalog,
@@ -520,7 +520,7 @@ section.feedback-form button {
   color: #FBE3E1 !important;
 }
 
-/* Стрелочки промотки внизу справа героя (светло-розовые круги), общие для карусели */
+/* Стрелочки промотки внизу справа героя — как в акциях: нежный розовый круг без рамки */
 .index-hero-8march__nav {
   position: absolute;
   right: 1.5rem;
@@ -532,10 +532,10 @@ section.feedback-form button {
 }
 
 .index-hero-8march__arrow {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid #FBE3E1 !important;
+  border: none !important;
   background: #FBE3E1 !important;
   background-color: #FBE3E1 !important;
   cursor: pointer;
@@ -548,25 +548,24 @@ section.feedback-form button {
   align-items: center;
   justify-content: center;
   color: #FBE3E1;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 .index-hero-8march__arrow svg {
-  width: 40%;
+  width: 50%;
   height: auto;
   display: block;
-  color: #1a1a1a;
-  stroke: #1a1a1a;
+  color: #2d2d2d;
+  stroke: #2d2d2d;
 }
 
 .index-hero-8march__arrow:hover {
-  background: #f5d9d7 !important;
-  background-color: #f5d9d7 !important;
-  border-color: #f5d9d7 !important;
-  color: #f5d9d7;
+  background: #f5d5d2 !important;
+  background-color: #f5d5d2 !important;
+  color: #f5d5d2;
 }
 .index-hero-8march__arrow:hover svg {
-  color: #1a1a1a;
-  stroke: #1a1a1a;
+  color: #2d2d2d;
+  stroke: #2d2d2d;
 }
 
 .index-hero-8march__arrow--prev {
@@ -912,23 +911,39 @@ section.feedback-form button {
     min-width: 462px;
     flex: 0 0 462px;
   }
-  .index-bouquets-8march__grid {
-    grid-template-columns: 462px 1fr 1fr;
-  }
-  .index-bouquets-8march__grid .index-bouquets-8march__card:first-child {
-    width: 462px;
-  }
   .index-bouquets-8march__grid-first {
-    width: 462px;
+    width: 520px;
+    min-width: 520px;
   }
   .index-bouquets-8march__card--first {
-    width: 462px;
+    width: 520px !important;
+    min-width: 520px;
   }
   .index-bouquets-8march__grid-rest {
-    grid-template-columns: repeat(3, 320px);
+    grid-template-columns: repeat(2, 300px);
   }
   .index-bouquets-8march__grid-rest .index-bouquets-8march__card {
-    width: 320px;
+    width: 300px;
+    max-width: 300px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-first {
+    width: 300px;
+    min-width: 300px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__card--first {
+    width: 300px !important;
+    min-width: 300px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest {
+    grid-template-columns: 300px 520px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:first-child {
+    width: 300px;
+    max-width: 300px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:last-child {
+    width: 520px;
+    min-width: 520px;
   }
 }
 
@@ -966,7 +981,7 @@ section.feedback-form button {
   color: #2d2d2d;
 }
 
-.index-promo-8march__btn-card {
+.index-promo-8march__btn {
   display: inline-block;
   padding: 0.5rem 1.25rem;
   font-size: 0.8rem;
@@ -974,6 +989,7 @@ section.feedback-form button {
   letter-spacing: 0.03em;
   border: none;
   border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
   background: #e8e0d5;
   color: #2d2d2d;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -985,8 +1001,8 @@ section.feedback-form button {
 .index-promo-8march__card--large:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
 }
-.index-promo-8march__card:hover .index-promo-8march__btn-card {
-  background: #dfd5ca;
+.index-promo-8march__card:hover .index-promo-8march__btn {
+  background: #f5d5d3;
   color: #2d2d2d;
 }
 
@@ -1394,6 +1410,7 @@ section.feedback-form button {
   flex: 0 0 377px;
 }
 
+/* Сетка 3×3: в каждом ряду первая карточка крупнее, две остальные меньше */
 .index-bouquets-8march__grid {
   display: flex;
   flex-direction: column;
@@ -1401,6 +1418,7 @@ section.feedback-form button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 3rem;
+  box-sizing: border-box;
 }
 
 .index-bouquets-8march__grid-row {
@@ -1410,7 +1428,8 @@ section.feedback-form button {
 }
 
 .index-bouquets-8march__grid-first {
-  width: 319px;
+  width: 400px;
+  min-width: 400px;
   flex-shrink: 0;
 }
 
@@ -1434,8 +1453,10 @@ section.feedback-form button {
   transition: none;
 }
 
+/* Первая карточка в ряду — крупнее (400px), остальные две — меньше (260px) */
 .index-bouquets-8march__card--first {
-  width: 319px;
+  width: 400px !important;
+  min-width: 400px;
   opacity: 1;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   transform: translateY(-2px);
@@ -1443,6 +1464,37 @@ section.feedback-form button {
 
 .index-bouquets-8march__grid-rest .index-bouquets-8march__card {
   width: 260px;
+  max-width: 260px;
+}
+
+/* Второй ряд: крупная последняя карточка, две предыдущие — меньше */
+.index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-first {
+  width: 260px;
+  min-width: 260px;
+}
+.index-bouquets-8march__grid-row--last-big .index-bouquets-8march__card--first {
+  width: 260px !important;
+  min-width: 260px;
+  box-shadow: none;
+  transform: none;
+}
+.index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest {
+  grid-template-columns: 260px 400px;
+}
+.index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:first-child {
+  width: 260px;
+  max-width: 260px;
+}
+.index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:last-child {
+  width: 400px;
+  min-width: 400px;
+  max-width: none;
+  opacity: 1;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+.index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:last-child:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
 }
 
 .index-bouquets-8march__card:hover {
@@ -1496,7 +1548,7 @@ section.feedback-form button {
 }
 
 .index-bouquets-8march__card:hover .index-bouquets-8march__btn {
-  background: #dfd5ca;
+  background: #f5d5d3;
   color: #2d2d2d;
 }
 
@@ -1539,13 +1591,38 @@ section.feedback-form button {
 
 @media (min-width: 768px) {
   .index-bouquets-8march__grid-first {
-    width: 377px;
+    width: 440px;
+    min-width: 440px;
   }
   .index-bouquets-8march__card--first {
-    width: 377px;
+    width: 440px !important;
+    min-width: 440px;
   }
   .index-bouquets-8march__grid-rest {
-    grid-template-columns: repeat(3, 260px);
+    grid-template-columns: repeat(2, 260px);
+  }
+  .index-bouquets-8march__grid-rest .index-bouquets-8march__card {
+    width: 260px;
+    max-width: 260px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-first {
+    width: 260px;
+    min-width: 260px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__card--first {
+    width: 260px !important;
+    min-width: 260px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest {
+    grid-template-columns: 260px 440px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:first-child {
+    width: 260px;
+    max-width: 260px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:last-child {
+    width: 440px;
+    min-width: 440px;
   }
 }
 
@@ -1559,16 +1636,38 @@ section.feedback-form button {
     padding-right: 1rem;
   }
   .index-bouquets-8march__grid-first {
-    width: 319px;
+    width: 320px;
+    min-width: 280px;
   }
   .index-bouquets-8march__card--first {
-    width: 319px;
+    width: 100% !important;
+    min-width: 0;
   }
   .index-bouquets-8march__grid-rest {
-    grid-template-columns: repeat(2, 220px);
+    grid-template-columns: repeat(2, 180px);
   }
   .index-bouquets-8march__grid-rest .index-bouquets-8march__card {
+    width: 180px;
+    max-width: 180px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-first {
+    width: 180px;
+    min-width: 180px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__card--first {
+    width: 180px !important;
+    min-width: 0;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest {
+    grid-template-columns: 180px 220px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:first-child {
+    width: 180px;
+    max-width: 180px;
+  }
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:last-child {
     width: 220px;
+    min-width: 220px;
   }
   .index-bouquets-8march__carousel-wrap {
     padding-left: 1rem;
@@ -1578,13 +1677,13 @@ section.feedback-form button {
     display: none;
   }
   .index-bouquets-8march__track .index-bouquets-8march__card {
-    width: 220px;
-    min-width: 220px;
+    width: 242px;
+    min-width: 242px;
   }
   .index-bouquets-8march__track .index-bouquets-8march__card--large {
-    width: 319px;
-    min-width: 319px;
-    flex: 0 0 319px;
+    width: 352px;
+    min-width: 352px;
+    flex: 0 0 352px;
   }
 }
 
