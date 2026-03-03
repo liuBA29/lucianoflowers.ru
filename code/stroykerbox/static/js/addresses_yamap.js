@@ -4,29 +4,29 @@ $(document).ready(function() {
         if (locationSlug) {
             window.location = window.location.pathname + '?location=' + locationSlug;
         }
-
     });
 
     var myMap;
     ymaps.ready(init);
 });
 
-const YAMAP_CONTAINER_ID = 'yamap_addresses';
+var YAMAP_CONTAINER_ID = 'yamap_addresses';
 
-function init () {
-    // Создание экземпляра карты и его привязка к контейнеру с
-    // заданным id ("map").
-    const yamapContainer = $('#' + YAMAP_CONTAINER_ID);
-    const centerCoords = [
-        parseFloat(yamapContainer.data('center-latitude')),
-        parseFloat(yamapContainer.data('center-longitude'))
-    ];
+function init() {
+    var yamapContainer = $('#' + YAMAP_CONTAINER_ID);
+    if (!yamapContainer.length) {
+        return;
+    }
+    var centerLat = parseFloat(yamapContainer.data('center-latitude'));
+    var centerLng = parseFloat(yamapContainer.data('center-longitude'));
+    var zoomLevel = parseInt(yamapContainer.data('center-zoom'), 10);
+    if (isNaN(centerLat) || isNaN(centerLng) || isNaN(zoomLevel)) {
+        return;
+    }
 
     myMap = new ymaps.Map(YAMAP_CONTAINER_ID, {
-        // При инициализации карты обязательно нужно указать
-        // её центр и коэффициент масштабирования.
-        center: centerCoords,
-        zoom: parseInt(yamapContainer.data('center-zoom'))
+        center: [centerLat, centerLng],
+        zoom: zoomLevel
     }, {
         searchControlProvider: 'yandex#search'
     });
@@ -63,36 +63,29 @@ function init () {
     }
 }
 
-
 function add_points(map, element) {
     $(element).each(function(index) {
         var $this = $(this);
-        // Создаем геообъект с типом геометрии "Точка".
+        var lat = parseFloat($this.data('latitude'));
+        var lng = parseFloat($this.data('longitude'));
+        if (isNaN(lat) || isNaN(lng)) {
+            return;
+        }
         var myGeoObject = new ymaps.GeoObject({
-            // Описание геометрии.
             geometry: {
                 type: "Point",
-                coordinates:  [
-                    parseFloat($this.data('latitude')),
-                    parseFloat($this.data('longitude'))
-                ]
+                coordinates: [lat, lng]
             },
-            // Свойства.
             properties: {
-                // Контент метки.
                 balloonContent: $this.data('balloon-content'),
                 hintContent: $this.data('hint-content')
             }
         }, {
-            // Опции.
-            preset: 'islands#' + $this.data('icon-preset'),
+            preset: 'islands#' + ($this.data('icon-preset') || 'blueDotIcon'),
             iconGlyph: $this.data('glyph-icon-name'),
-            iconGlyphColor: $this.data('glyph-icon-color'),
-            // Метку нельзя перемещать.
+            iconGlyphColor: $this.data('glyph-icon-color') || '#000',
             draggable: false
         });
-
         map.geoObjects.add(myGeoObject);
     });
-
 }

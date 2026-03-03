@@ -23,6 +23,12 @@ def render_feedback_form_section(context, heading_tag=None):
     return context
 
 
+@register.inclusion_tag('crm/tags/feedback-form-section-8march.html', takes_context=True)
+def render_feedback_form_section_8march(context):
+    context['form'] = FeedbackMessageForm()
+    return context
+
+
 @register.simple_tag(takes_context=True)
 def render_callme_request_form(context, mobile=False):
     if config.AMOCRM_CALLME_FORM:

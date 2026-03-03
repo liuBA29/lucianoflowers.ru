@@ -58,6 +58,35 @@ function init() {
 
     // Добавление точек на карту
     add_points(myMap, '.address-data');
+
+    // Маркер главного магазина (адрес + своя иконка в круге)
+    const mainStoreLat = yamapContainer.data('main-store-lat');
+    const mainStoreLng = yamapContainer.data('main-store-lng');
+    const mainStoreIcon = yamapContainer.data('main-store-icon');
+    if (mainStoreLat != null && mainStoreLng != null && mainStoreIcon) {
+        const lat = parseFloat(mainStoreLat);
+        const lng = parseFloat(mainStoreLng);
+        if (!isNaN(lat) && !isNaN(lng)) {
+            const iconUrl = mainStoreIcon.indexOf('/') === 0 ? (window.location.origin + mainStoreIcon) : mainStoreIcon;
+            const size = 48;
+            const half = size / 2;
+            const placemark = new ymaps.Placemark([lat, lng], {
+                hintContent: 'Г. Самара, ул. Ново-Садовая, д. 179',
+                balloonContent: 'Г. Самара, ул. Ново-Садовая, д. 179'
+            }, {
+                iconLayout: 'default#image',
+                iconImageHref: iconUrl,
+                iconImageSize: [size, size],
+                iconImageOffset: [-half, -half],
+                iconShape: {
+                    type: 'Circle',
+                    coordinates: [0, 0],
+                    radius: half
+                }
+            });
+            myMap.geoObjects.add(placemark);
+        }
+    }
 }
 
 function add_points(map, elementSelector) {

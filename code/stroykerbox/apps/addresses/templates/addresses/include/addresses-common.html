@@ -17,6 +17,5 @@
 
 {% addtoblock 'js' %}
 <script src="https://api-maps.yandex.ru/2.1/?apikey={% settings_value 'YANDEX_API_KEY' %}&lang=ru_RU" type="text/javascript"></script>
-{# <script src="{% static 'addresses/js/addresses_yamap.js' %}"></script> #}
 <script src="{% static 'js/addresses_yamap.js' %}"></script>
 {% endaddtoblock %}

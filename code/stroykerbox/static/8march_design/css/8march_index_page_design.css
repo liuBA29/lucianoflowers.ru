@@ -2187,9 +2187,11 @@ section.feedback-form button {
   left: 2rem;
   top: 2rem;
   z-index: 2;
-  max-width: 340px;
-  padding: 1.5rem 1.75rem;
-  background: rgba(255, 255, 255, 0.95);
+  max-width: 420px;
+  padding: 1.75rem 2rem;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0;
 }
@@ -2199,28 +2201,53 @@ section.feedback-form button {
   text-align: left;
 }
 
-.index-8march-map-overlay__address {
+.index-8march-map-overlay__row {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: inherit;
   margin: 0 0 0.75rem;
-  font-family: var(--8march-font-body, 'Inter', system-ui, sans-serif);
+  max-width: 100%;
+}
+.index-8march-map-overlay__row.index-8march-map-overlay__phone {
+  margin: 0 0 1.25rem;
+}
+
+.index-8march-map-overlay__icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e8c4c0;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.index-8march-map-overlay__icon svg {
+  width: 14px;
+  height: 14px;
+}
+.index-8march-map-overlay__row:hover .index-8march-map-overlay__icon {
+  background: #B8736E;
+}
+
+.index-8march-map-overlay__text {
+  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif);
+  font-weight: 300;
   font-size: 0.95rem;
   line-height: 1.4;
   color: #2d2d2d;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-
-.index-8march-map-overlay__phone {
-  margin: 0 0 1.25rem;
+.index-8march-map-overlay__phone .index-8march-map-overlay__text {
+  text-transform: none;
   font-size: 1rem;
 }
 
-.index-8march-map-overlay__phone a {
-  color: #2d2d2d;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.index-8march-map-overlay__phone a:hover {
+.index-8march-map-overlay__row:hover .index-8march-map-overlay__text {
   color: #5c4a4a;
 }
 
@@ -2237,7 +2264,7 @@ section.feedback-form button {
     top: 1rem;
     right: 1rem;
     max-width: none;
-    padding: 1rem;
+    padding: 1.25rem 1rem;
   }
   .page-index-8march .index-8march-map-wrap .wide-map,
   .page-index-8march .index-8march-map-wrap #yamap_addresses {
