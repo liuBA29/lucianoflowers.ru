@@ -12,20 +12,20 @@
 
             <div class="feedback-form--8march-footer__grid">
                 <label class="feedback-form--8march-footer__field">
-                    <span class="feedback-form--8march-footer__label">Ваше имя</span>
-                    <input type="text" name="name" class="feedback-form--8march-footer__input" required autocomplete="name"{% if request.user.is_authenticated and request.user.name %} value="{{ request.user.name }}"{% endif %}>
+                    <span class="feedback-form--8march-footer__label" aria-hidden="true">Ваше имя</span>
+                    <input type="text" name="name" class="feedback-form--8march-footer__input" required autocomplete="name" placeholder="Ваше имя"{% if request.user.is_authenticated and request.user.name %} value="{{ request.user.name }}"{% endif %}>
                 </label>
                 <label class="feedback-form--8march-footer__field">
-                    <span class="feedback-form--8march-footer__label">Номер телефона</span>
-                    <input type="tel" name="phone" class="feedback-form--8march-footer__input feedback-form--8march-footer__input--phone" required autocomplete="tel" placeholder="+7 (999) 999-99-99"{% if request.user.is_authenticated and request.user.phone %} value="{{ request.user.phone }}"{% endif %}>
+                    <span class="feedback-form--8march-footer__label" aria-hidden="true">Номер телефона</span>
+                    <input type="tel" name="phone" class="feedback-form--8march-footer__input feedback-form--8march-footer__input--phone" required autocomplete="tel" placeholder="Номер телефона"{% if request.user.is_authenticated and request.user.phone %} value="{{ request.user.phone }}"{% endif %}>
                 </label>
                 <label class="feedback-form--8march-footer__field">
-                    <span class="feedback-form--8march-footer__label">e-mail</span>
-                    <input type="email" name="email" class="feedback-form--8march-footer__input" required autocomplete="email"{% if request.user.is_authenticated %} value="{{ request.user.email }}"{% endif %}>
+                    <span class="feedback-form--8march-footer__label" aria-hidden="true">e-mail</span>
+                    <input type="email" name="email" class="feedback-form--8march-footer__input" required autocomplete="email" placeholder="e-mail"{% if request.user.is_authenticated %} value="{{ request.user.email }}"{% endif %}>
                 </label>
                 <label class="feedback-form--8march-footer__field">
-                    <span class="feedback-form--8march-footer__label">Ваш вопрос</span>
-                    <textarea name="message" class="feedback-form--8march-footer__input feedback-form--8march-footer__textarea" required rows="3"></textarea>
+                    <span class="feedback-form--8march-footer__label" aria-hidden="true">Ваш вопрос</span>
+                    <textarea name="message" class="feedback-form--8march-footer__input feedback-form--8march-footer__textarea" required rows="3" placeholder="Ваш вопрос"></textarea>
                 </label>
             </div>
 
