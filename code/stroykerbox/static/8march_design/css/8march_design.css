@@ -52,6 +52,17 @@
   --8march-section-gap: 4rem;
 }
 
+/* Убрать белые полосы по краям: сброс отступов и фон в тон сайта */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--8march-footer-bg, #cfdcab);
+}
+body {
+  overflow-x: hidden;
+}
+
 /* Шрифты макета — хэдер и футер 8march */
 .__header--8march,
 .__header--8march a,
@@ -251,13 +262,13 @@ section.__header.__header--8march.header-8march,
   background-color: #ffffff !important;
 }
 
-/* 8march: хедер на всю ширину экрана */
+/* 8march: хедер на всю ширину экрана (без зелёной полоски снизу — margin-bottom убран) */
 section.__header.__header--8march,
 section.__header.__header--8march.header-8march {
   width: 100vw;
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
-  margin-bottom: var(--8march-section-gap);
+  margin-bottom: 0;
   box-sizing: border-box;
 }
 
@@ -465,6 +476,51 @@ section.__header.__header--8march.header-8march {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+/* Мобильный хедер 8march: логотип, телефон без иконки, меню — только иконка; растянуть по ширине экрана */
+@media (max-width: 767px) {
+  .header-8march__bar {
+    padding-left: 16px;
+    padding-right: 16px;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .header-8march__center {
+    position: static;
+    transform: none;
+    order: 1;
+    margin-right: 0;
+    justify-content: flex-start;
+    flex: 0 0 auto;
+  }
+  .header-8march__right {
+    order: 2;
+    display: flex !important;
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+  }
+  .header-8march__phone {
+    justify-content: center;
+  }
+  .header-8march__phone-icon {
+    display: none !important;
+  }
+  .header-8march__cart {
+    display: none !important;
+  }
+  .header-8march__left {
+    order: 3;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+  }
+  .header-8march__left .header-8march__label {
+    display: none;
+  }
+  .header-8march__label--catalog {
+    display: none !important;
+  }
 }
 
 /* Логотип по центру хэдера */
@@ -1744,9 +1800,9 @@ img[src*="placeholder"],
     display: none !important;
   }
 
-  /* Скрыть десктопный хэдер 8march (логотип, меню+«Каталог букетов», телефон, корзина) — на малом экране только мобильный хэдер; убрать белый блок между хэдером и контентом */
-  section.__header.__header--8march,
-  section.header--8march {
+  /* Скрыть десктопный хэдер 8march (Bootstrap-сетка) — только если это не standalone-хедер с .header-8march__bar; на standalone оставляем логотип, телефон, меню */
+  section.__header.__header--8march:not(:has(.header-8march__bar)),
+  section.header--8march:not(:has(.header-8march__bar)) {
     display: none !important;
     height: 0 !important;
     overflow: hidden !important;

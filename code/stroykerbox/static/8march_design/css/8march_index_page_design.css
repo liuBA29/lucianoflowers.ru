@@ -15,11 +15,16 @@
   margin-top: var(--8march-section-gap) !important;
 }
 .page-index-8march .index-8march-content > .index-8march-vector-zone + * {
-  margin-top: var(--8march-section-gap) !important;
+  margin-top: 0 !important;
 }
 .page-index-8march .index-8march-content > section + section,
 .page-index-8march .index-8march-content > section + div {
   margin-top: var(--8march-section-gap) !important;
+}
+
+/* Убрать зелёный зазор над блоком «Сборные букеты» */
+.page-index-8march .index-info-8march + .index-bouquets-8march {
+  margin-top: 0 !important;
 }
 
 /* --- Типографика по эталону Figma ---
@@ -328,18 +333,19 @@ section.feedback-form button {
   display: block;
 }
 
-/* Квадратик с логотипом: светлый полупрозрачный с блюром, без серой рамки (перебиваем любые глобальные стили) */
+/* Квадратик с логотипом: светлый полупрозрачный с блюром; меньше блока с картинкой по ширине и высоте, расположен внутри него по центру */
 .page-index-8march .index-hero-8march__logo-box,
 .index-hero-8march__logo-box {
   position: relative;
   z-index: 1;
-  width: min(360px, 78vw);
+  width: min(280px, 42vw);
+  max-width: 85%;
   aspect-ratio: 1;
-  max-height: min(360px, 65vh);
+  max-height: min(280px, 50vh);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1.5rem;
   background: rgba(255, 255, 252, 0.78) !important;
   background-color: rgba(255, 255, 252, 0.78) !important;
   border: none !important;
@@ -363,7 +369,7 @@ section.feedback-form button {
 
 .index-hero-8march__logo {
   width: 100%;
-  max-width: 340px;
+  max-width: 260px;
   height: auto;
   display: block;
   object-fit: contain;
@@ -372,18 +378,19 @@ section.feedback-form button {
   border-radius: 0 !important;
 }
 
-/* Вторая карточка героя: квадратик с надписью «8 марта» — тот же размер и стиль, что и квадрат с логотипом в 1-й карточке (без скруглений, тот же блюр) */
+/* Вторая карточка героя: квадратик с надписью «8 марта» — меньше блока с картинкой, расположен внутри по центру */
 .index-hero-8march__8march-card {
   position: relative;
   z-index: 1;
-  width: min(360px, 78vw);
+  width: min(280px, 42vw);
+  max-width: 85%;
   aspect-ratio: 1;
-  max-height: min(360px, 65vh);
+  max-height: min(280px, 50vh);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 2rem 2rem 0.25rem 2rem;
+  padding: 1.5rem 1.5rem 0.25rem 1.5rem;
   overflow: hidden;
   background: rgba(255, 255, 252, 0.78) !important;
   background-color: rgba(255, 255, 252, 0.78) !important;
@@ -547,10 +554,13 @@ section.feedback-form button {
 }
 
 /* Стрелочки промотки внизу справа героя — как в акциях: нежный розовый круг без рамки */
+/* Стрелочки промотки внизу справа героя — как в акциях: нежный розовый круг без рамки */
 .index-hero-8march__nav {
   position: absolute;
   right: 1.5rem;
   bottom: 1.5rem;
+  left: auto;
+  transform: none;
   display: flex;
   gap: 0.5rem;
   z-index: 20;
@@ -604,35 +614,54 @@ section.feedback-form button {
 
 @media (max-width: 767px) {
   .index-hero-8march__inner {
-    flex-direction: column;
+    flex-direction: column-reverse;
     min-height: auto;
   }
-  .index-hero-8march__left {
+  .index-hero-8march__left,
+  .index-hero-8march__right {
     min-height: 260px;
   }
   .index-hero-8march__img {
     min-height: 260px;
   }
+  .index-hero-8march__left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .index-hero-8march__logo-box {
-    width: min(260px, 62vw);
-    max-height: min(260px, 45vh);
-    padding: 1.25rem;
+    width: min(140px, 42vw);
+    max-width: 55%;
+    max-height: min(140px, 28vh);
+    aspect-ratio: 1;
+    padding: 0.75rem 0.875rem;
   }
   .index-hero-8march__8march-card {
-    width: min(260px, 62vw);
-    max-height: min(260px, 45vh);
-    padding: 1.25rem;
+    width: min(140px, 42vw);
+    max-width: 55%;
+    max-height: min(140px, 28vh);
+    aspect-ratio: 1;
+    padding: 0.75rem 0.875rem;
   }
   .index-hero-8march__logo {
-    max-width: 200px;
+    max-width: 100px;
   }
   .index-hero-8march__right {
-    min-height: 200px;
-    padding-left: 2.5rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .index-hero-8march__right .index-hero-8march__text {
+    text-align: center;
   }
   .index-hero-8march__nav {
-    right: 1rem;
-    bottom: 1rem;
+    left: 50%;
+    right: auto;
+    bottom: 0;
+    transform: translateX(-50%);
   }
   .index-hero-8march__arrow {
     width: 38px;
@@ -825,16 +854,36 @@ section.feedback-form button {
     display: none;
   }
   .index-categories-8march__inner {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem 0.5rem;
+    justify-items: center;
+    overflow: visible;
     padding-left: 1rem;
     padding-right: 1rem;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: unset;
+    scroll-snap-type: none;
+    flex-wrap: unset;
+    justify-content: unset;
   }
   .index-categories-8march__item {
-    scroll-snap-align: start;
+    scroll-snap-align: unset;
+  }
+  /* Вторая строка: 5-й и 6-й элемент по центру */
+  .index-categories-8march__item:nth-child(5) {
+    grid-column: 2;
+  }
+  .index-categories-8march__item:nth-child(6) {
+    grid-column: 3;
+  }
+  .index-categories-8march__img-wrap {
+    width: 70px;
+    height: 94px;
+    border-radius: 50px;
+  }
+  .index-categories-8march__label {
+    font-size: 0.7rem;
+    max-width: 90px;
   }
 }
 
@@ -1060,7 +1109,7 @@ section.feedback-form button {
 
 .index-promo-8march__footer {
   text-align: center;
-  margin: 2rem auto 3rem;
+  margin: 0.75rem auto 3rem;
   background: #fff !important;
   position: relative;
   z-index: 1;
@@ -1096,24 +1145,39 @@ section.feedback-form button {
 }
 
 @media (max-width: 767px) {
-  .index-promo-8march__carousel-wrap {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
   .index-promo-8march__title {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+  .index-promo-8march__carousel-wrap {
+    position: static;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
   .index-promo-8march__arrow {
-    display: none;
+    display: flex;
+    position: absolute;
+    top: 2rem;
+    margin-top: 0;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
   }
-  .index-promo-8march__card {
-    width: 220px;
+  .index-promo-8march__arrow--prev {
+    left: auto;
+    right: 4rem;
   }
+  .index-promo-8march__arrow--next {
+    right: 1rem;
+  }
+  .index-promo-8march__card,
   .index-promo-8march__card--large {
-    width: 319px;
-    min-width: 319px;
-    flex: 0 0 319px;
+    width: 220px;
+    min-width: 220px;
+    flex: 0 0 220px;
+    opacity: 1;
+    box-shadow: none;
+    transform: none;
   }
 }
 
@@ -1274,6 +1338,44 @@ section.feedback-form button {
   .index-info-8march__inner {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+}
+
+/* На малом экране: рубрика «Гарантия / Доставка / Подарки» и звёзды — один столбец, блок выше, звёзды в конце */
+@media (max-width: 767px) {
+  .index-info-8march {
+    height: auto;
+    min-height: auto;
+    padding: 2rem 1rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .index-info-8march__inner {
+    height: auto;
+    min-height: 0;
+    order: 1;
+  }
+  .index-info-8march__ratings-block {
+    position: static;
+    transform: none;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-top: 2rem;
+    padding: 1rem 0 0;
+    order: 2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .index-info-8march__ratings-inner {
+    justify-content: center;
+    align-items: center;
+    height: auto;
   }
 }
 
@@ -1613,40 +1715,38 @@ section.feedback-form button {
   .index-bouquets-8march__grid {
     padding-left: 1rem;
     padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
-  .index-bouquets-8march__grid-first {
-    width: 320px;
-    min-width: 280px;
+  .index-bouquets-8march__grid-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
   }
-  .index-bouquets-8march__card--first {
-    width: 100% !important;
-    min-width: 0;
-  }
-  .index-bouquets-8march__grid-rest {
-    grid-template-columns: repeat(2, 180px);
-  }
-  .index-bouquets-8march__grid-rest .index-bouquets-8march__card {
-    width: 180px;
-    max-width: 180px;
-  }
+  .index-bouquets-8march__grid-first,
   .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-first {
-    width: 180px;
-    min-width: 180px;
-  }
-  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__card--first {
-    width: 180px !important;
+    width: 100%;
     min-width: 0;
   }
+  .index-bouquets-8march__grid-rest,
   .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest {
-    grid-template-columns: 180px 220px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    grid-template-columns: unset;
+    gap: 1.5rem;
   }
-  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:first-child {
-    width: 180px;
-    max-width: 180px;
-  }
-  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card:last-child {
-    width: 220px;
-    min-width: 220px;
+  .index-bouquets-8march__card--first,
+  .index-bouquets-8march__grid-rest .index-bouquets-8march__card,
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__card--first,
+  .index-bouquets-8march__grid-row--last-big .index-bouquets-8march__grid-rest .index-bouquets-8march__card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-shadow: none;
+    transform: none;
   }
   .index-bouquets-8march__carousel-wrap {
     padding-left: 1rem;

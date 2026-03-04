@@ -43,8 +43,16 @@ function init8marchCarousel(wrapEl, options) {
   function getScrollLeftForIndex(index) {
     if (index <= 0) return 0;
     var s = getSizes();
-    var offset = 0;
-    for (var i = 0; i < index; i++) offset += s.smallW + s.gap;
+    if (s.largeW <= s.smallW) {
+      /* Малый экран: все карточки одинаковые */
+      return index * (s.smallW + s.gap);
+    }
+    /* Большой экран: первая карточка крупная (377px), при прокрутке следующая становится крупной.
+       Смещения: 0 → 0; 1 → прошли карточку 0 (она уже 260 после ухода) = smallW+gap; 2 → + карточку 1 (377) = + largeW+gap; 3 → + smallW+gap; ... */
+    var offset = s.smallW + s.gap; /* до начала карточки 1 */
+    for (var i = 1; i < index; i++) {
+      offset += (i % 2 === 1 ? s.largeW + s.gap : s.smallW + s.gap);
+    }
     return offset;
   }
 
@@ -52,6 +60,17 @@ function init8marchCarousel(wrapEl, options) {
     if (!track || !cards.length) return;
     var s = getSizes();
     var deltaW = s.largeW - s.smallW;
+    /* На малом экране (одинаковые карточки) — только сбрасываем стили, без анимации «крупной» карточки */
+    if (deltaW <= 0) {
+      for (var j = 0; j < cards.length; j++) {
+        cards[j].classList.remove(cardLargeClass);
+        cards[j].style.width = '';
+        cards[j].style.minWidth = '';
+        cards[j].style.flexBasis = '';
+        cards[j].style.transition = '';
+      }
+      return;
+    }
     var scrollLeft = track.scrollLeft;
     var maxScroll = getScrollLeftForIndex(cards.length - 1);
     var i = 0;
@@ -105,21 +124,26 @@ function init8marchCarousel(wrapEl, options) {
   function getCurrentIndex() {
     if (!track || !cards.length) return 0;
     var scrollLeft = track.scrollLeft;
-    var maxScroll = getScrollLeftForIndex(cards.length - 1);
-    if (scrollLeft <= 0) return 0;
-    if (scrollLeft >= maxScroll - 1) return cards.length - 1;
-    for (var k = 0; k < cards.length - 1; k++) {
-      var from = getScrollLeftForIndex(k);
-      var to = getScrollLeftForIndex(k + 1);
-      if (scrollLeft >= from && scrollLeft < to) {
-        var p = (scrollLeft - from) / (to - from);
-        return p < 0.5 ? k : k + 1;
-      }
+    var s = getSizes();
+    if (s.largeW <= s.smallW) {
+      var step = s.smallW + s.gap;
+      var idx = Math.floor((scrollLeft + 2) / step);
+      return idx <= 0 ? 0 : (idx >= cards.length ? cards.length - 1 : idx);
     }
-    return 0;
+    /* Большой экран: находим индекс по тем же границам, что и getScrollLeftForIndex */
+    if (scrollLeft <= 0) return 0;
+    var offset = s.smallW + s.gap;
+    if (scrollLeft < offset) return 1;
+    for (var k = 2; k < cards.length; k++) {
+      offset += (k % 2 === 1 ? s.largeW + s.gap : s.smallW + s.gap);
+      if (scrollLeft < offset) return k;
+    }
+    return cards.length - 1;
   }
 
   function setLargeByIndex(index) {
+    var s = getSizes();
+    if (s.largeW <= s.smallW) return; /* на малом экране не переключаем «крупную» карточку */
     for (var j = 0; j < cards.length; j++) {
       cards[j].classList.toggle(cardLargeClass, j === index);
       cards[j].style.width = '';
