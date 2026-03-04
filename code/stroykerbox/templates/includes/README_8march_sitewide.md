@@ -22,4 +22,13 @@
    `8march_design/css/8march_design.css` (и при показе главной — `8march_index_page_design.css`).  
    Это можно делать в base-шаблоне по тому же флагу.
 
+## Чекбоксы согласия (2 шт) и одинаковый текст
+
+Тег `{% render_form_agreement form %}` рендерит `common/tags/form-agreement.html` и может выводить **2 чекбокса**:
+
+- `form_agreement_text` (agree-one)
+- `form_agreement_text2` (agree-two, если `agreement2=True` в контексте)
+
+Если в админке/Statictext тексты `form_agreement_text` и `form_agreement_text2` заданы одинаково, визуально получится **2 одинаковых чекбокса** — это не баг в шаблоне, а настройки текста.
+
 Проблем с таким переключением нет: один раз добавляется флаг и два include в base — дальше всё работает для всех страниц.

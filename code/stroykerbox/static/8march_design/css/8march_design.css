@@ -166,6 +166,9 @@
 .footer--8march .footer-bottom__left {
   display: block !important;
 }
+.footer--8march .footer-bottom {
+  border-top: none !important;
+}
 button,
 .btn,
 input[type="submit"],
@@ -857,6 +860,12 @@ footer::before {
   -webkit-mask-position: center bottom;
   -webkit-mask-repeat: no-repeat;
 }
+/* Пудровый логотип LUCIANO в футере 8march — опустить на самый низ, оттенок #FBE3E1 */
+.footer--8march::before {
+  top: auto;
+  bottom: 0;
+  background-color: #FBE3E1;
+}
 
 @media (max-width: 767px) {
   footer::before {
@@ -1136,11 +1145,14 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   width: 18px !important;
   height: 18px !important;
   min-width: 18px !important;
+  min-height: 18px !important;
   max-width: 18px !important;
+  max-height: 18px !important;
   margin: 0 !important;
   padding: 0 !important;
   flex: 0 0 18px !important;
   display: inline-block !important;
+  line-height: 18px !important;
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   border-radius: 6px !important;
   -webkit-border-radius: 6px !important;

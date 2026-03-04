@@ -31,7 +31,12 @@
 
             <div class="feedback-form--8march-footer__row">
                 <button type="submit" class="feedback-form--8march-footer__submit black-button">ОТПРАВИТЬ</button>
-                {% render_form_agreement form %}
+                <div class="form-group privacy-policy agree-one">
+                    <div class="checkbox">
+                        <input type="checkbox" name="privacy-policy" id="privacy-feedback-8march" required autocomplete="off" class="white-checkbox"/>
+                        <label for="privacy-feedback-8march">Вы даете согласие на публикацию отзывов</label>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
