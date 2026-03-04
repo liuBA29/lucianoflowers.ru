@@ -1351,6 +1351,32 @@ section.feedback-form button {
     flex-direction: column;
     align-items: stretch;
   }
+  /* Прямоугольник с блюром на всю рубрику (только малый экран), блюр ослаблен; рамочка 15px по периметру — размытый слой inset, по краям прозрачное «окно» */
+  .index-info-8march::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    top: 15px;
+    bottom: 15px;
+    z-index: 1;
+    background: rgba(253, 248, 245, 0.45);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    pointer-events: none;
+  }
+  /* Водяной знак на малом экране — на всю рубрику (текст + звёзды), логотип как в футере; зелёный как в футере. Соотношение размера рубрики и логотипа: 41% ширины секции — не менять без согласования. */
+  .index-info-8march__watermark {
+    background-color: #CFDCAB !important;
+    mask-image: url("/static/8march_design/images/luciano_logo_90.svg") !important;
+    -webkit-mask-image: url("/static/8march_design/images/luciano_logo_90.svg") !important;
+    mask-size: 41% auto !important;
+    -webkit-mask-size: 41% auto !important;
+    mask-position: 98% top !important;
+    -webkit-mask-position: 98% top !important;
+    mask-repeat: no-repeat !important;
+    -webkit-mask-repeat: no-repeat !important;
+  }
   .index-info-8march__inner {
     height: auto;
     min-height: 0;
@@ -1371,6 +1397,8 @@ section.feedback-form button {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+    position: relative;
+    z-index: 2;
   }
   .index-info-8march__ratings-inner {
     justify-content: center;
@@ -2397,10 +2425,10 @@ section.feedback-form button {
   .page-index-8march .index-8march-content {
     padding-bottom: 0 !important;
   }
-  /* Небольшой зазор сверху и снизу футера на малом экране */
+  /* Небольшой зазор сверху и снизу футера на малом экране; снизу — минимум, футер заканчивается под копирайтом */
   .page-index-8march .footer--8march {
     padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
+    padding-bottom: 12px;
   }
   /* Отступ до «ОСТАЛИСЬ ВОПРОСЫ?» (между картой и заголовком) */
   .page-index-8march .footer-8march-questions-row {

@@ -1459,10 +1459,16 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   }
   .footer--8march .container {
     padding-top: 0 !important;
+    padding-bottom: 0.75rem !important;
   }
   .footer--8march {
     padding-top: 0 !important;
+    padding-bottom: 12px !important;
     margin-top: 0 !important;
+  }
+  /* Футер заканчивается под копирайтом: нижний блок (версия, соцсети и т.д.) на малом экране скрыт */
+  .footer--8march .footer-bottom {
+    display: none !important;
   }
   .footer-8march-call-col {
     /* на малых экранах выравнивание по левому краю */
@@ -1473,9 +1479,12 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   }
   .footer--8march .footer-8march-content {
     grid-template-columns: 1fr;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
   }
   .footer--8march .footer-8march-copyright {
     text-align: left;
+    margin-bottom: 0 !important;
   }
   /* Мобильная версия: блоки меню футера один под другим (как в эталоне) */
   .footer--8march .footer-8march-menu {
