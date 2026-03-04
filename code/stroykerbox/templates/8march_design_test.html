@@ -1,4 +1,4 @@
-{% load static crm_tags common_tags address_tags sekizai_tags %}
+{% load static crm_tags common_tags address_tags sekizai_tags humanize utils_tags %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -113,86 +113,30 @@
               <button type="button" class="index-promo-8march__arrow index-promo-8march__arrow--prev" title="Назад" aria-label="Назад"></button>
               <div class="index-promo-8march__carousel" data-promo-carousel>
                 <div class="index-promo-8march__track">
+                  {% get_media_prefix as MEDIA_URL %}
+                  {% for product in products_8march %}
+                  <a href="{{ product.get_absolute_url }}" class="index-promo-8march__card {% if forloop.first %}index-promo-8march__card--large{% endif %}">
+                    <span class="index-promo-8march__img-wrap">
+                      {% if product.main_image %}
+                      <img src="{{ MEDIA_URL }}{{ product.main_image.image }}" alt="{{ product.name }}" class="index-promo-8march__img">
+                      {% else %}
+                      <img src="{% static '8march_design/images/LUCIANO/2.png' %}" alt="{{ product.name }}" class="index-promo-8march__img">
+                      {% endif %}
+                    </span>
+                    <span class="index-promo-8march__prices">
+                      <span class="index-promo-8march__price-new">{{ product.price|floatformat:0|intcomma }} P</span>
+                    </span>
+                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
+                  </a>
+                  {% empty %}
                   <a href="{% url 'catalog:index' %}" class="index-promo-8march__card index-promo-8march__card--large">
                     <span class="index-promo-8march__img-wrap">
                       <img src="{% static '8march_design/images/LUCIANO/2.png' %}" alt="" class="index-promo-8march__img">
                     </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">3 250 P</span>
-                      <span class="index-promo-8march__price-new">3 150 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
+                    <span class="index-promo-8march__prices"><span class="index-promo-8march__price-new">—</span></span>
+                    <span class="index-promo-8march__btn beige_button">В КАТАЛОГ</span>
                   </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/Rectangle 8.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">12 250 P</span>
-                      <span class="index-promo-8march__price-new">10 500 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/Rectangle 9.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">7 400 P</span>
-                      <span class="index-promo-8march__price-new">5 850 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/4.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">5 200 P</span>
-                      <span class="index-promo-8march__price-new">4 600 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/2.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">3 250 P</span>
-                      <span class="index-promo-8march__price-new">3 150 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/Rectangle 8.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">12 250 P</span>
-                      <span class="index-promo-8march__price-new">10 500 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/Rectangle 9.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">7 400 P</span>
-                      <span class="index-promo-8march__price-new">5 850 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
-                  <a href="{% url 'catalog:index' %}" class="index-promo-8march__card">
-                    <span class="index-promo-8march__img-wrap">
-                      <img src="{% static '8march_design/images/LUCIANO/4.png' %}" alt="" class="index-promo-8march__img">
-                    </span>
-                    <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-old">5 200 P</span>
-                      <span class="index-promo-8march__price-new">4 600 P</span>
-                    </span>
-                    <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
-                  </a>
+                  {% endfor %}
                 </div>
               </div>
               <button type="button" class="index-promo-8march__arrow index-promo-8march__arrow--next" title="Вперёд" aria-label="Вперёд"></button>

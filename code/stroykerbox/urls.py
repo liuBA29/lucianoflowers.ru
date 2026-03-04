@@ -22,7 +22,8 @@ from stroykerbox.apps.utils.views import clear_cache, clear_thumbnail_cache
 from stroykerbox.apps.search.views import SearchResult
 from stroykerbox.apps.common.views import StaffCheckPage, DashboardPage
 from stroykerbox.apps.crm.forms import FeedbackMessageForm
-from stroykerbox.apps.catalog.models import Category
+from stroykerbox.apps.catalog.models import Category, Product
+from stroykerbox.apps.catalog.category_slugs import CATEGORY_NAME_TO_SLUG
 
 YML_URL = getattr(config, 'YML_URL', 'catalog_export.yml') or 'catalog_export.yml'
 
@@ -42,27 +43,58 @@ def view_8march_design_test(request):
         footer_contacts = getattr(config, 'MAIL__FOOTER_CONTACTS', None) or ''
     except Exception:
         pass
-    # Корневые категории каталога по порядку — для блока с овальными картинками (Готовая витрина, Моно букеты и т.д.)
-    categories_qs = Category.objects.filter(published=True, level=0).order_by('tree_id', 'lft')[:6]
-    categories_list = list(categories_qs)
-    # Фиксированные картинки и подписи для 6 слотов; ссылка — на соответствующую категорию или каталог
+    # Блок с круглыми картинками: каждая картинка ведёт на категорию по slug.
+    # Слот: (путь к картинке в static, alt, label, название категории из CATEGORY_NAME_TO_SLUG или None → каталог).
+    #
+    # Справочник рубрик (не менять подписи и картинки без согласования; при подмене — восстанавливать по комментам):
+    # 1) Готовая витрина — картинка images/gotovaya-vitrina.png, категория «Хиты продаж» (slug gotovaya-vitrina), ссылка /catalog/gotovaya-vitrina/
+    # 2) Моно букеты — картинка images/monoduo-bukety.png, категория «Моно/дуо букеты» (slug monoduo-bukety), ссылка /catalog/monoduo-bukety/
+    # 3) Композиции — картинка images/kompozicii.png, категория «Цветочные композиции» (slug kompozicii), ссылка /catalog/kompozicii/
+    # 4) WOW эффект — картинка images/wow-effect.png, категория «Эффектные букеты» (slug wow-bukety), ссылка /catalog/wow-bukety/
+    # 5) Fresh букеты — картинка images/fresh-buketi.png, категория «Интерьерные букеты» (slug fresh-bukety), ссылка /catalog/fresh-bukety/
+    # 6) Подарки — картинка images/podarki.png, категория «Подарки» (slug podarki), ссылка /catalog/podarki/
+    #
+    # Куда пойдут ссылки с каждой картинки (блок круглых картинок на главной 8march):
+    #   Готовая витрина  → /catalog/gotovaya-vitrina/
+    #   Моно букеты      → /catalog/monoduo-bukety/
+    #   Композиции       → /catalog/kompozicii/
+    #   WOW эффект       → /catalog/wow-bukety/
+    #   Fresh букеты     → /catalog/fresh-bukety/
+    #   Подарки          → /catalog/podarki/
+    #
     category_slots = (
-        ('1.png', 'Готовая витрина', 'ГОТОВАЯ<br>ВИТРИНА'),
-        ('2.png', 'Моно букеты', 'МОНО<br>БУКЕТЫ'),
-        ('4.png', 'Авторские букеты', 'АВТОРСКИЕ<br>БУКЕТЫ'),
-        ('5.png', 'Композиции', 'КОМПОЗИЦИИ'),
-        ('6.png', 'Подарки', 'ПОДАРКИ'),
-        ('8.png', 'Букет по желанию', 'БУКЕТ ПО<br>ЖЕЛАНИЮ'),
+        ('images/gotovaya-vitrina.png', 'Готовая витрина', 'ГОТОВАЯ<br>ВИТРИНА', 'Хиты продаж'),
+        ('images/monoduo-bukety.png', 'Моно букеты', 'МОНО<br>БУКЕТЫ', 'Моно/дуо букеты'),
+        ('images/kompozicii.png', 'Композиции', 'КОМПОЗИЦИИ', 'Цветочные композиции'),
+        ('images/wow-effect.png', 'WOW эффект', 'WOW<br>ЭФФЕКТ', 'Эффектные букеты'),
+        ('images/fresh-buketi.png', 'Fresh букеты', 'FRESH<br>БУКЕТЫ', 'Интерьерные букеты'),
+        ('images/podarki.png', 'Подарки', 'ПОДАРКИ', 'Подарки'),
     )
     categories_8march = []
-    for i, (img, alt, label) in enumerate(category_slots):
-        url = categories_list[i].get_absolute_url() if i < len(categories_list) else reverse('catalog:index')
+    for image_path, alt, label, category_name in category_slots:
+        category_slug = CATEGORY_NAME_TO_SLUG.get(category_name) if category_name else None
+        category = Category.objects.filter(published=True, level=0, slug=category_slug).first() if category_slug else None
+        url = category.get_absolute_url() if category else reverse('catalog:index')
         categories_8march.append({
             'url': url,
-            'image': '8march_design/images/LUCIANO/' + img,
+            'image': image_path,
             'alt': alt,
             'label': label,
         })
+    # Блок «Акции» 8march: пока все товары каталога (картинка, цена, ссылка).
+    products_qs = (
+        Product.objects.published()
+        .exclude_by_modification_code()
+        .order_by('-id')[:24]
+    )
+    products_8march = list(products_qs)
+    if not products_8march:
+        # Запасной вариант: если после exclude_by_modification_code никого не осталось (пустая БД или все отфильтровались).
+        products_8march = list(
+            Product.objects.filter(published=True)
+            .exclude(slug='')
+            .order_by('-id')[:24]
+        )
     return render(request, '8march_design_test.html', {
         'cart_count': cart_count,
         'header_phone': header_phone or None,
@@ -72,6 +104,7 @@ def view_8march_design_test(request):
         'footer_logo_url': footer_logo_url or None,
         'feedback_form': FeedbackMessageForm(),
         'categories_8march': categories_8march,
+        'products_8march': products_8march,
     })
 
 
