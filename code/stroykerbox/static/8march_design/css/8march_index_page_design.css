@@ -2372,3 +2372,42 @@ section.feedback-form button {
     min-height: 320px !important;
   }
 }
+
+/* Малый экран: убрать зазор между картой и футером «Остались вопросы?» */
+@media (max-width: 991px) {
+  /* main не растягивать — футер сразу под картой */
+  .page-index-8march main {
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  /* Секция карты по высоте карты, без лишних 80vh (иначе под картой пустое место) */
+  .page-index-8march .index-8march-map-wrap {
+    min-height: max(60vh, 320px) !important;
+  }
+  .page-index-8march .index-8march-map-wrap .conditional-section.ya-map,
+  .page-index-8march .index-8march-map-wrap section.ya-map {
+    min-height: 60vh !important;
+  }
+  .page-index-8march .index-8march-questions-wrap,
+  .page-index-8march .index-8march-map-wrap {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .page-index-8march .index-8march-content {
+    padding-bottom: 0 !important;
+  }
+  /* Небольшой зазор сверху и снизу футера на малом экране */
+  .page-index-8march .footer--8march {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+  /* Отступ до «ОСТАЛИСЬ ВОПРОСЫ?» (между картой и заголовком) */
+  .page-index-8march .footer-8march-questions-row {
+    padding-top: 0.5rem;
+  }
+  /* Отступ между заголовком и формой */
+  .page-index-8march .footer-8march-questions__title {
+    margin-bottom: 0.5rem;
+  }
+}

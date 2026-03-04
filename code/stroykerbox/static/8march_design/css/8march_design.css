@@ -933,6 +933,15 @@ footer::before {
     mask-position: right center;
     -webkit-mask-position: right center;
   }
+  .footer--8march::before {
+    top: 0;
+    bottom: auto;
+    /* размер логотипа меньше примерно в 1.5 раза (≈2/3 от contain) */
+    mask-size: 67% auto;
+    -webkit-mask-size: 67% auto;
+    mask-position: right top;
+    -webkit-mask-position: right top;
+  }
 }
 
 footer .container {
@@ -1060,22 +1069,23 @@ footer .footer-bottom .footer-bottom__left {
   grid-template-columns: minmax(0, 1fr) minmax(220px, auto);
   gap: 2rem 1.25rem;
   align-items: start;
-  margin-top: 2.5rem;
-  margin-bottom: var(--8march-section-gap);
-  padding-bottom: 2rem;
+  margin-top: 1.75rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.25rem;
   border-bottom: none !important;
 }
-/* На больших экранах: заголовок слева, форма справа */
+/* На больших экранах: заголовок слева, форма справа — форма ближе к заголовку (как в эталоне) */
 @media (min-width: 992px) {
   .footer--8march .footer-8march-questions-col {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 2rem 3rem;
+    gap: 2rem 1.5rem; /* меньше зазор между «ОСТАЛИСЬ ВОПРОСЫ?» и формой */
   }
   .footer--8march .footer-8march-questions-col .footer-8march-questions__title,
   .footer--8march .footer-8march-questions-col .feedback-form--8march-footer {
     margin: 0;
+    padding-top: 0;
   }
   .footer--8march .footer-8march-questions-col .feedback-form--8march-footer {
     margin-left: auto;
@@ -1083,14 +1093,20 @@ footer .footer-bottom .footer-bottom__left {
   }
 }
 .footer-8march-questions__title {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--8march-footer-title, #2d2d2d);
-  margin: 0 0 1rem;
-  line-height: 1.2;
+  /* Как .big-title, но чуть меньше: крупный серый заголовок секции */
+  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
+  font-weight: 300 !important;
+  font-size: 36px !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  color: #000000 !important;
+  margin: 0 0 0.25rem; /* минимальный зазор до формы — как в эталоне */
+}
+@media (min-width: 992px) {
+  .footer-8march-questions__title {
+    font-size: 28px !important; /* на большом экране чуть меньше */
+  }
 }
 /* Новая форма 8 марта: 4 одинаковых поля ввода, симметричная сетка 2×2 */
 .feedback-form--8march-footer {
@@ -1349,16 +1365,20 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
 .footer--8march .footer-8march-content {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: end;
 }
 .footer--8march .footer-8march-menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem 3rem;
+  gap: 1.5rem 3rem;
+  align-items: flex-start;
 }
 .footer--8march .footer-8march-menu .footer-content__column--lg {
   flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content {
   display: flex;
@@ -1371,8 +1391,37 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   padding: 0;
   list-style: none;
 }
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content ul li {
+  margin: 0 0 0.4rem 0;
+  line-height: 1.45;
+}
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content ul li:last-child {
+  margin-bottom: 0;
+}
+/* Колонок две: КАТАЛОГ и ПОКУПАТЕЛЯМ — обе с двумя списками, одинаковое оформление */
 .footer--8march .footer-8march-menu .footer-content__column--links-only .footer-content__title {
   display: none;
+}
+/* КАТАЛОГ и ПОКУПАТЕЛЯМ — тот же шрифт что и «ОСТАЛИСЬ ВОПРОСЫ?», но меньше */
+.footer--8march .footer-content__title {
+  font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
+  font-weight: 300 !important;
+  font-size: 24px !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  color: #000000 !important;
+  margin-bottom: 0.5rem !important;
+  display: block;
+}
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content {
+  display: flex;
+  gap: 0 2rem;
+}
+@media (min-width: 992px) {
+  .footer--8march .footer-content__title {
+    font-size: 20px !important; /* на большом экране чуть меньше */
+  }
 }
 .footer--8march .footer-8march-copyright {
   text-align: right;
@@ -1387,9 +1436,40 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
 @media (max-width: 991px) {
   .footer--8march .footer-8march-questions-row {
     grid-template-columns: 1fr;
+    margin-top: 0 !important; /* убрать зазор между картой и «Остались вопросы?» */
+    padding-top: 0.75rem !important; /* небольшой зазор до заголовка */
+  }
+  .footer--8march .footer-8march-questions-col {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  /* Небольшой зазор между заголовком «ОСТАЛИСЬ ВОПРОСЫ?» и формой */
+  .footer--8march .footer-8march-questions-col .footer-8march-questions__title {
+    margin-bottom: 0.75rem !important;
+  }
+  /* Класс media_title: на малом экране все заголовки как «ОСТАЛИСЬ ВОПРОСЫ?» (один размер) */
+  .footer--8march .media_title {
+    font-family: var(--8march-font-serif, 'Cormorant Garamond', Georgia, serif) !important;
+    font-weight: 300 !important;
+    font-size: 36px !important;
+    line-height: 100% !important;
+    letter-spacing: 0 !important;
+    text-transform: uppercase !important;
+    color: #000000 !important;
+  }
+  .footer--8march .container {
+    padding-top: 0 !important;
+  }
+  .footer--8march {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
   }
   .footer-8march-call-col {
+    /* на малых экранах выравнивание по левому краю */
     text-align: left;
+  }
+  .footer--8march .footer-8march-call__phone {
+    text-align: left !important;
   }
   .footer--8march .footer-8march-content {
     grid-template-columns: 1fr;
@@ -1401,12 +1481,12 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   .footer--8march .footer-8march-menu {
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: 1.5rem;
+    gap: 3rem !important;
     align-items: stretch;
   }
   .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content {
     flex-direction: column;
-    gap: 0;
+    gap: 1rem;
   }
   /* Малый экран: у всего содержимого футера убираем заливки, рамки, тени — водяной знак проходит сквозь, не обрезается */
   .footer--8march .container,
@@ -1431,8 +1511,15 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
     border: none !important;
   }
   .footer--8march .container .form-group.privacy-policy .checkbox,
-  .footer--8march .container input[type="checkbox"] {
-    background-color: #fff !important;
+  .footer--8march .container .form-group.privacy-policy label {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .footer--8march .container .form-group.privacy-policy input[type="checkbox"] {
+    /* только сам чекбокс — как на большом экране, без рамочки вокруг блока */
+    background-color: var(--8march-footer-input-bg, #fff) !important;
     border: 1px solid var(--8march-footer-input-border, #e0e0e0) !important;
   }
 }
