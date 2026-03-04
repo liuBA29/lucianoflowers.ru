@@ -927,8 +927,9 @@ footer::before {
   footer::before {
     mask-image: url("/static/8march_design/images/luciano_logo_90.svg");
     -webkit-mask-image: url("/static/8march_design/images/luciano_logo_90.svg");
-    mask-size: auto 100%;
-    -webkit-mask-size: auto 100%;
+    /* contain — чтобы весь логотип помещался и не обрезался по краям */
+    mask-size: contain;
+    -webkit-mask-size: contain;
     mask-position: right center;
     -webkit-mask-position: right center;
   }
@@ -1062,7 +1063,7 @@ footer .footer-bottom .footer-bottom__left {
   margin-top: 2.5rem;
   margin-bottom: var(--8march-section-gap);
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: none !important;
 }
 /* На больших экранах: заголовок слева, форма справа */
 @media (min-width: 992px) {
@@ -1333,6 +1334,11 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   color: var(--8march-footer-title, #2d2d2d);
   text-decoration: none;
 }
+.footer--8march a,
+.footer--8march a:hover,
+.footer--8march a:focus {
+  text-decoration: none !important;
+}
 .footer-8march-call__btn {
   display: inline-block;
   padding: 0.6rem 1.25rem;
@@ -1371,6 +1377,12 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
 .footer--8march .footer-8march-copyright {
   text-align: right;
   justify-content: flex-end;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.footer--8march .footer-8march-copyright .footer-copyright {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 @media (max-width: 991px) {
   .footer--8march .footer-8march-questions-row {
@@ -1384,6 +1396,44 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   }
   .footer--8march .footer-8march-copyright {
     text-align: left;
+  }
+  /* Мобильная версия: блоки меню футера один под другим (как в эталоне) */
+  .footer--8march .footer-8march-menu {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content {
+    flex-direction: column;
+    gap: 0;
+  }
+  /* Малый экран: у всего содержимого футера убираем заливки, рамки, тени — водяной знак проходит сквозь, не обрезается */
+  .footer--8march .container,
+  .footer--8march .container * {
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .footer--8march .container input:not([type="hidden"]):not([type="checkbox"]),
+  .footer--8march .container textarea,
+  .footer--8march .container .form-control {
+    background-color: var(--8march-footer-input-bg, #fff) !important;
+    background: var(--8march-footer-input-bg, #fff) !important;
+    border: 1px solid var(--8march-footer-input-border, #e0e0e0) !important;
+  }
+  .footer--8march .container button,
+  .footer--8march .container .black-button,
+  .footer--8march .container [type="submit"] {
+    background-color: var(--8march-footer-btn-bg, #1a1a1a) !important;
+    background: var(--8march-footer-btn-bg, #1a1a1a) !important;
+    border: none !important;
+  }
+  .footer--8march .container .form-group.privacy-policy .checkbox,
+  .footer--8march .container input[type="checkbox"] {
+    background-color: #fff !important;
+    border: 1px solid var(--8march-footer-input-border, #e0e0e0) !important;
   }
 }
 
