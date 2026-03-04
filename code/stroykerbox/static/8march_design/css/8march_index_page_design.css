@@ -129,7 +129,7 @@
   text-shadow: 0 0 24px rgba(196, 154, 154, 0.25);
 }
 .page-index-8march .index-hero-8march__8march-card .index-hero-8march__8march-month {
-  font-size: clamp(3rem, 6.2vw, 4rem);
+  font-size: clamp(2.25rem, 5vw, 3rem);
   font-weight: 700;
   margin-top: -0.35em;
   letter-spacing: 0.02em;
@@ -333,15 +333,15 @@ section.feedback-form button {
   display: block;
 }
 
-/* Квадратик с логотипом: светлый полупрозрачный с блюром; меньше блока с картинкой по ширине и высоте, расположен внутри него по центру */
+/* Квадратик с логотипом: светлый полупрозрачный с блюром; крупнее */
 .page-index-8march .index-hero-8march__logo-box,
 .index-hero-8march__logo-box {
   position: relative;
   z-index: 1;
-  width: min(280px, 42vw);
-  max-width: 85%;
+  width: min(380px, 54vw);
+  max-width: 92%;
   aspect-ratio: 1;
-  max-height: min(280px, 50vh);
+  max-height: min(380px, 58vh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,19 +378,19 @@ section.feedback-form button {
   border-radius: 0 !important;
 }
 
-/* Вторая карточка героя: квадратик с надписью «8 марта» — меньше блока с картинкой, расположен внутри по центру */
+/* Вторая карточка героя: квадратик с надписью «8 марта» — крупнее, в одном стиле с logo-box */
 .index-hero-8march__8march-card {
   position: relative;
   z-index: 1;
-  width: min(280px, 42vw);
-  max-width: 85%;
+  width: min(380px, 54vw);
+  max-width: 92%;
   aspect-ratio: 1;
-  max-height: min(280px, 50vh);
+  max-height: min(380px, 58vh);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 1.5rem 1.5rem 0.25rem 1.5rem;
+  padding: 1.5rem;
   overflow: hidden;
   background: rgba(255, 255, 252, 0.78) !important;
   background-color: rgba(255, 255, 252, 0.78) !important;
@@ -469,7 +469,7 @@ section.feedback-form button {
 }
 .index-hero-8march__8march-month {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(3rem, 6.2vw, 4rem);
+  font-size: clamp(2.25rem, 5vw, 3rem);
   font-weight: 700;
   letter-spacing: 0.02em;
   background: linear-gradient(160deg, #3B3036 0%, #8b6b6b 50%, #c49a9a 100%);
@@ -636,12 +636,25 @@ section.feedback-form button {
     aspect-ratio: 1;
     padding: 0.75rem 0.875rem;
   }
+  /* Заблюренная область «8 марта» на малом экране — крупнее */
   .index-hero-8march__8march-card {
-    width: min(140px, 42vw);
-    max-width: 55%;
-    max-height: min(140px, 28vh);
+    width: min(270px, 68vw);
+    max-width: 88%;
+    max-height: min(270px, 48vh);
     aspect-ratio: 1;
-    padding: 0.75rem 0.875rem;
+    padding: 1rem 1.25rem;
+  }
+  /* Чуть меньше шрифты в карточке «8 марта», чтобы слоган не обрезался */
+  .index-hero-8march__8march-card .index-hero-8march__8march-number {
+    font-size: clamp(4rem, 12vw, 7rem);
+  }
+  .index-hero-8march__8march-card .index-hero-8march__8march-month {
+    font-size: clamp(1.25rem, 3vw, 1.875rem);
+  }
+  .index-hero-8march__8march-card .index-hero-8march__8march-slogan {
+    font-size: 13px;
+    line-height: 1.25;
+    padding-top: 0.5rem;
   }
   .index-hero-8march__logo {
     max-width: 100px;
@@ -2461,8 +2474,8 @@ section.feedback-form button {
   }
   .page-index-8march .index-8march-map-wrap .wide-map,
   .page-index-8march .index-8march-map-wrap #yamap_addresses {
-    height: 60vh !important;
-    min-height: 320px !important;
+    height: 120vh !important;
+    min-height: 640px !important;
   }
 }
 
@@ -2474,13 +2487,13 @@ section.feedback-form button {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
-  /* Секция карты по высоте карты, без лишних 80vh (иначе под картой пустое место) */
+  /* Секция карты по высоте карты: на малом экране высота увеличена в 2 раза */
   .page-index-8march .index-8march-map-wrap {
-    min-height: max(60vh, 320px) !important;
+    min-height: max(120vh, 640px) !important;
   }
   .page-index-8march .index-8march-map-wrap .conditional-section.ya-map,
   .page-index-8march .index-8march-map-wrap section.ya-map {
-    min-height: 60vh !important;
+    min-height: 120vh !important;
   }
   .page-index-8march .index-8march-questions-wrap,
   .page-index-8march .index-8march-map-wrap {
@@ -2494,6 +2507,28 @@ section.feedback-form button {
   .page-index-8march .footer--8march {
     padding-top: 1.25rem;
     padding-bottom: 12px;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+  .page-index-8march .footer--8march .container {
+    overflow: visible !important;
+  }
+  /* Колонка ПОКУПАТЕЛЯМ: прозрачный фон, чтобы буква L логотипа просвечивала */
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers,
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__title,
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content,
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content ul,
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content li,
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content a {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers::before,
+  .page-index-8march .footer--8march .footer-8march-menu .footer-content__column--buyers::after {
+    display: none !important;
   }
   /* Отступ до «ОСТАЛИСЬ ВОПРОСЫ?» (между картой и заголовком) */
   .page-index-8march .footer-8march-questions-row {
@@ -2503,4 +2538,22 @@ section.feedback-form button {
   .page-index-8march .footer-8march-questions__title {
     margin-bottom: 0.5rem;
   }
+}
+
+/* Футер 8march: колонки КАТАЛОГ и ПОКУПАТЕЛЯМ без фона на всех экранах (главная 8march) */
+.page-index-8march .footer--8march .footer-8march-menu,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__title,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content ul,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content li,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content a {
+  background-color: transparent !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg::before,
+.page-index-8march .footer--8march .footer-8march-menu .footer-content__column--lg::after {
+  display: none !important;
 }

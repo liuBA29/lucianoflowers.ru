@@ -894,6 +894,17 @@ footer {
   border: none !important;
   outline: none !important;
 }
+/* Малый экран: не обрезать логотип справа — разрешаем overflow */
+@media (max-width: 991px) {
+  .footer--8march {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+  .footer--8march .container {
+    overflow: visible !important;
+  }
+}
 
 footer::before {
   content: "";
@@ -927,7 +938,7 @@ footer::before {
   footer::before {
     mask-image: url("/static/8march_design/images/luciano_logo_90.svg");
     -webkit-mask-image: url("/static/8march_design/images/luciano_logo_90.svg");
-    /* contain — чтобы весь логотип помещался и не обрезался по краям */
+    /* contain — весь логотип помещается, не обрезается по краям */
     mask-size: contain;
     -webkit-mask-size: contain;
     mask-position: right center;
@@ -936,9 +947,9 @@ footer::before {
   .footer--8march::before {
     top: 0;
     bottom: auto;
-    /* размер логотипа меньше примерно в 1.5 раза (≈2/3 от contain) */
-    mask-size: 67% auto;
-    -webkit-mask-size: 67% auto;
+    /* Уменьшаем размер, чтобы логотип целиком влезал и не обрезался справа */
+    mask-size: 50% auto;
+    -webkit-mask-size: 50% auto;
     mask-position: right top;
     -webkit-mask-position: right top;
   }
@@ -1374,6 +1385,23 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   gap: 1.5rem 3rem;
   align-items: flex-start;
 }
+/* КАТАЛОГ и ПОКУПАТЕЛЯМ — без фона на всех экранах, чтобы логотип не перекрывался */
+.footer--8march .footer-8march-menu,
+.footer--8march .footer-8march-menu .footer-content__column--lg,
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__title,
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content,
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content ul,
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content li,
+.footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content a {
+  background-color: transparent !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+.footer--8march .footer-8march-menu .footer-content__column--lg::before,
+.footer--8march .footer-8march-menu .footer-content__column--lg::after {
+  display: none !important;
+}
 .footer--8march .footer-8march-menu .footer-content__column--lg {
   flex: 0 0 auto;
   display: flex;
@@ -1496,6 +1524,22 @@ section.feedback-form--8march-footer button[type="submit"].black-button:hover {
   .footer--8march .footer-8march-menu .footer-content__column--lg .footer-content__ul-content {
     flex-direction: column;
     gap: 1rem;
+  }
+  /* Колонка ПОКУПАТЕЛЯМ: прозрачный фон, чтобы буква L логотипа не перекрывалась */
+  .footer--8march .footer-8march-menu .footer-content__column--buyers,
+  .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__title,
+  .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content,
+  .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content ul,
+  .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content li,
+  .footer--8march .footer-8march-menu .footer-content__column--buyers .footer-content__ul-content a {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+  .footer--8march .footer-8march-menu .footer-content__column--buyers::before,
+  .footer--8march .footer-8march-menu .footer-content__column--buyers::after {
+    display: none !important;
   }
   /* Малый экран: у всего содержимого футера убираем заливки, рамки, тени — водяной знак проходит сквозь, не обрезается */
   .footer--8march .container,
