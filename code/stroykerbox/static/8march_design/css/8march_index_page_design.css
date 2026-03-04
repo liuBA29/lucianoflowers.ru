@@ -217,7 +217,7 @@
 .index-8march-content label[for] {
   cursor: pointer;
 }
-.index-8march-content input:not([type="submit"]):not([type="button"]),
+.index-8march-content input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
 .index-8march-content select,
 .index-8march-content textarea {
   cursor: text;
@@ -1145,19 +1145,29 @@ section.feedback-form button {
 }
 
 @media (max-width: 767px) {
+  .index-promo-8march {
+    position: relative;
+  }
   .index-promo-8march__title {
     padding-left: 1rem;
     padding-right: 1rem;
+    margin-bottom: 0.5rem;
   }
   .index-promo-8march__carousel-wrap {
     position: static;
     padding-left: 1rem;
     padding-right: 1rem;
   }
+  .index-promo-8march__carousel {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    overflow: hidden;
+  }
   .index-promo-8march__arrow {
     display: flex;
     position: absolute;
-    top: 2rem;
+    top: 1.5rem;
     margin-top: 0;
     transform: translateY(-50%);
     width: 38px;
@@ -1172,12 +1182,19 @@ section.feedback-form button {
   }
   .index-promo-8march__card,
   .index-promo-8march__card--large {
-    width: 220px;
-    min-width: 220px;
-    flex: 0 0 220px;
+    width: 280px;
+    min-width: 280px;
+    flex: 0 0 280px;
     opacity: 1;
     box-shadow: none;
     transform: none;
+  }
+  .index-promo-8march__track {
+    min-width: 0;
+    flex: 0 0 100%;
+    width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -1671,6 +1688,39 @@ section.feedback-form button {
   margin-top: 2rem;
   padding: 0 1rem;
   background: #fff !important;
+}
+
+/* Общий блок и кнопка «СМОТРЕТЬ ВЕСЬ КАТАЛОГ» под акциями и под сборными букетами — одинаковый вид */
+.index-8march__footer-catalog {
+  margin-top: 2rem !important;
+  margin-bottom: 0 !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  max-width: none !important;
+}
+
+.index-8march-btn-catalog {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #2d2d2d !important;
+  border: none !important;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  background: #FBE3E1 !important;
+  background-color: #FBE3E1 !important;
+  background-image: none !important;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box;
+}
+.index-8march-btn-catalog:hover {
+  background: #f5d5d3 !important;
+  background-color: #f5d5d3 !important;
 }
 
 .index-bouquets-8march__btn-catalog {

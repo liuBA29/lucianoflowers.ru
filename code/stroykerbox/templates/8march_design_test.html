@@ -24,7 +24,8 @@
         <div class="index-8march-vector-zone">
           <div class="index-8march__diagonal-line" aria-hidden="true">
             <svg viewBox="0 0 100 280" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              <path d="M 100 0 Q 25 140 0 280" stroke="#FFF2F1" stroke-width="52" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke"/>
+              <!-- Плавные полукруглые волны: кубические Безье с согласованными касательными в стыках (без изломов) -->
+              <path d="M 100 0 C 95 25 72 42 70 50 C 60 90 48 92 45 95 C 15 125 22 148 20 155 C 5 207 2 255 0 280" stroke="#FFF2F1" stroke-width="52" stroke-linecap="round" stroke-linejoin="round" fill="none" vector-effect="non-scaling-stroke"/>
             </svg>
           </div>
 
@@ -196,8 +197,8 @@
               </div>
               <button type="button" class="index-promo-8march__arrow index-promo-8march__arrow--next" title="Вперёд" aria-label="Вперёд"></button>
             </div>
-            <div class="index-promo-8march__footer">
-              <a href="{% url 'catalog:index' %}" class="index-promo-8march__btn-catalog">СМОТРЕТЬ ВЕСЬ КАТАЛОГ</a>
+            <div class="index-promo-8march__footer index-8march__footer-catalog">
+              <a href="{% url 'catalog:index' %}" class="index-promo-8march__btn-catalog index-8march-btn-catalog">СМОТРЕТЬ ВЕСЬ КАТАЛОГ</a>
             </div>
           </section>
         </div>
@@ -323,8 +324,8 @@
               </div>
             </div>
           </div>
-          <div class="index-bouquets-8march__footer">
-            <a href="{% url 'catalog:index' %}" class="index-bouquets-8march__btn-catalog">СМОТРЕТЬ ВЕСЬ КАТАЛОГ</a>
+          <div class="index-bouquets-8march__footer index-8march__footer-catalog">
+            <a href="{% url 'catalog:index' %}" class="index-bouquets-8march__btn-catalog index-8march-btn-catalog">СМОТРЕТЬ ВЕСЬ КАТАЛОГ</a>
           </div>
         </section>
 
@@ -487,7 +488,7 @@
           breakpoints: [
             { minWidth: 1600, smallW: 320, largeW: 462 },
             { minWidth: 768, smallW: 260, largeW: 377 },
-            { minWidth: 0, smallW: 220, largeW: 220 }
+            { minWidth: 0, smallW: 280, largeW: 280 }
           ]
         });
       }
