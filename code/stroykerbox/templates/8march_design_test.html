@@ -113,18 +113,22 @@
               <button type="button" class="index-promo-8march__arrow index-promo-8march__arrow--prev" title="Назад" aria-label="Назад"></button>
               <div class="index-promo-8march__carousel" data-promo-carousel>
                 <div class="index-promo-8march__track">
-                  {% get_media_prefix as MEDIA_URL %}
                   {% for product in products_8march %}
                   <a href="{{ product.get_absolute_url }}" class="index-promo-8march__card {% if forloop.first %}index-promo-8march__card--large{% endif %}">
                     <span class="index-promo-8march__img-wrap">
                       {% if product.main_image %}
-                      <img src="{{ MEDIA_URL }}{{ product.main_image.image }}" alt="{{ product.name }}" class="index-promo-8march__img">
+                      <img src="{{ product.main_image.image.url }}" alt="{{ product.name }}" class="index-promo-8march__img">
                       {% else %}
                       <img src="{% static '8march_design/images/LUCIANO/2.png' %}" alt="{{ product.name }}" class="index-promo-8march__img">
                       {% endif %}
                     </span>
                     <span class="index-promo-8march__prices">
-                      <span class="index-promo-8march__price-new">{{ product.price|floatformat:0|intcomma }} P</span>
+                      {% if product.old_price %}
+                      <span class="index-promo-8march__price-old pretty_numbers">{{ product.old_price|floatformat:0|intcomma }} P</span>
+                      <span class="index-promo-8march__price-new pretty_numbers">{{ product.price|floatformat:0|intcomma }} P</span>
+                      {% else %}
+                      <span class="index-promo-8march__price-new pretty_numbers">{{ product.price|floatformat:0|intcomma }} P</span>
+                      {% endif %}
                     </span>
                     <span class="index-promo-8march__btn beige_button">ПОДРОБНЕЕ</span>
                   </a>
@@ -180,6 +184,106 @@
         <section class="index-bouquets-8march" aria-labelledby="index-bouquets-8march-title">
           <h2 class="index-bouquets-8march__title big-title" id="index-bouquets-8march-title">СБОРНЫЕ БУКЕТЫ</h2>
           <div class="index-bouquets-8march__grid">
+            {% for row in bouquets_8march_rows %}
+            <div class="index-bouquets-8march__grid-row {% if forloop.counter == 2 %}index-bouquets-8march__grid-row--last-big{% endif %}">
+              <div class="index-bouquets-8march__grid-first">
+                {% if row.0 %}
+                <a href="{{ row.0.get_absolute_url }}" class="index-bouquets-8march__card index-bouquets-8march__card--first">
+                  <span class="index-bouquets-8march__img-wrap">
+                    {% if row.0.main_image %}
+                    <img src="{{ row.0.main_image.image.url }}" alt="{{ row.0.name }}" class="index-bouquets-8march__img">
+                    {% else %}
+                    <img src="{% static '8march_design/images/LUCIANO/4.png' %}" alt="{{ row.0.name }}" class="index-bouquets-8march__img">
+                    {% endif %}
+                  </span>
+                  <p class="index-bouquets-8march__desc">{{ row.0.name }}</p>
+                  {% if row.0.price %}<p class="index-bouquets-8march__price">{{ row.0.price|floatformat:0|intcomma }} Р</p>{% endif %}
+                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                </a>
+                {% endif %}
+              </div>
+              <div class="index-bouquets-8march__grid-rest">
+                {% if row.1 %}
+                <a href="{{ row.1.get_absolute_url }}" class="index-bouquets-8march__card">
+                  <span class="index-bouquets-8march__img-wrap">
+                    {% if row.1.main_image %}
+                    <img src="{{ row.1.main_image.image.url }}" alt="{{ row.1.name }}" class="index-bouquets-8march__img">
+                    {% else %}
+                    <img src="{% static '8march_design/images/LUCIANO/5.png' %}" alt="{{ row.1.name }}" class="index-bouquets-8march__img">
+                    {% endif %}
+                  </span>
+                  <p class="index-bouquets-8march__desc">{{ row.1.name }}</p>
+                  {% if row.1.price %}<p class="index-bouquets-8march__price">{{ row.1.price|floatformat:0|intcomma }} Р</p>{% endif %}
+                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                </a>
+                {% endif %}
+                {% if row.2 %}
+                <a href="{{ row.2.get_absolute_url }}" class="index-bouquets-8march__card">
+                  <span class="index-bouquets-8march__img-wrap">
+                    {% if row.2.main_image %}
+                    <img src="{{ row.2.main_image.image.url }}" alt="{{ row.2.name }}" class="index-bouquets-8march__img">
+                    {% else %}
+                    <img src="{% static '8march_design/images/LUCIANO/6.png' %}" alt="{{ row.2.name }}" class="index-bouquets-8march__img">
+                    {% endif %}
+                  </span>
+                  <p class="index-bouquets-8march__desc">{{ row.2.name }}</p>
+                  {% if row.2.price %}<p class="index-bouquets-8march__price">{{ row.2.price|floatformat:0|intcomma }} Р</p>{% endif %}
+                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+            {% empty %}
+            {% for row in fallback_bouquets_8march_rows %}
+            <div class="index-bouquets-8march__grid-row {% if forloop.counter == 2 %}index-bouquets-8march__grid-row--last-big{% endif %}">
+              <div class="index-bouquets-8march__grid-first">
+                {% if row.0 %}
+                <a href="{{ row.0.get_absolute_url }}" class="index-bouquets-8march__card index-bouquets-8march__card--first">
+                  <span class="index-bouquets-8march__img-wrap">
+                    {% if row.0.main_image %}
+                    <img src="{{ row.0.main_image.image.url }}" alt="{{ row.0.name }}" class="index-bouquets-8march__img">
+                    {% else %}
+                    <img src="{% static '8march_design/images/LUCIANO/4.png' %}" alt="{{ row.0.name }}" class="index-bouquets-8march__img">
+                    {% endif %}
+                  </span>
+                  <p class="index-bouquets-8march__desc">{{ row.0.name }}</p>
+                  {% if row.0.price %}<p class="index-bouquets-8march__price">{{ row.0.price|floatformat:0|intcomma }} Р</p>{% endif %}
+                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                </a>
+                {% endif %}
+              </div>
+              <div class="index-bouquets-8march__grid-rest">
+                {% if row.1 %}
+                <a href="{{ row.1.get_absolute_url }}" class="index-bouquets-8march__card">
+                  <span class="index-bouquets-8march__img-wrap">
+                    {% if row.1.main_image %}
+                    <img src="{{ row.1.main_image.image.url }}" alt="{{ row.1.name }}" class="index-bouquets-8march__img">
+                    {% else %}
+                    <img src="{% static '8march_design/images/LUCIANO/5.png' %}" alt="{{ row.1.name }}" class="index-bouquets-8march__img">
+                    {% endif %}
+                  </span>
+                  <p class="index-bouquets-8march__desc">{{ row.1.name }}</p>
+                  {% if row.1.price %}<p class="index-bouquets-8march__price">{{ row.1.price|floatformat:0|intcomma }} Р</p>{% endif %}
+                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                </a>
+                {% endif %}
+                {% if row.2 %}
+                <a href="{{ row.2.get_absolute_url }}" class="index-bouquets-8march__card">
+                  <span class="index-bouquets-8march__img-wrap">
+                    {% if row.2.main_image %}
+                    <img src="{{ row.2.main_image.image.url }}" alt="{{ row.2.name }}" class="index-bouquets-8march__img">
+                    {% else %}
+                    <img src="{% static '8march_design/images/LUCIANO/6.png' %}" alt="{{ row.2.name }}" class="index-bouquets-8march__img">
+                    {% endif %}
+                  </span>
+                  <p class="index-bouquets-8march__desc">{{ row.2.name }}</p>
+                  {% if row.2.price %}<p class="index-bouquets-8march__price">{{ row.2.price|floatformat:0|intcomma }} Р</p>{% endif %}
+                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+            {% empty %}
             <div class="index-bouquets-8march__grid-row">
               <div class="index-bouquets-8march__grid-first">
                 <a href="{% url 'catalog:index' %}" class="index-bouquets-8march__card index-bouquets-8march__card--first">
@@ -188,7 +292,7 @@
                   </span>
                   <p class="index-bouquets-8march__desc">Авторский букет с гортензиями и кустовыми розами</p>
                   <p class="index-bouquets-8march__price">3 150 Р</p>
-                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                  <span class="index-bouquets-8march__btn beige_button">В КАТАЛОГ</span>
                 </a>
               </div>
               <div class="index-bouquets-8march__grid-rest">
@@ -205,7 +309,7 @@
                   </span>
                   <p class="index-bouquets-8march__desc">Авторский букет с пионовидными розами и эвкалиптом</p>
                   <p class="index-bouquets-8march__price">6 000 Р</p>
-                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                  <span class="index-bouquets-8march__btn beige_button">В КАТАЛОГ</span>
                 </a>
               </div>
             </div>
@@ -226,7 +330,7 @@
                   </span>
                   <p class="index-bouquets-8march__desc">Авторский букет с гортензиями и кустовыми розами</p>
                   <p class="index-bouquets-8march__price">3 150 Р</p>
-                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                  <span class="index-bouquets-8march__btn beige_button">В КАТАЛОГ</span>
                 </a>
                 <a href="{% url 'catalog:index' %}" class="index-bouquets-8march__card">
                   <span class="index-bouquets-8march__img-wrap">
@@ -234,7 +338,7 @@
                   </span>
                   <p class="index-bouquets-8march__desc">Авторский букет с пионовидными розами и эвкалиптом</p>
                   <p class="index-bouquets-8march__price">6 000 Р</p>
-                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                  <span class="index-bouquets-8march__btn beige_button">В КАТАЛОГ</span>
                 </a>
               </div>
             </div>
@@ -246,7 +350,7 @@
                   </span>
                   <p class="index-bouquets-8march__desc">Авторский букет с пионовидными розами и эвкалиптом</p>
                   <p class="index-bouquets-8march__price">6 000 Р</p>
-                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                  <span class="index-bouquets-8march__btn beige_button">В КАТАЛОГ</span>
                 </a>
               </div>
               <div class="index-bouquets-8march__grid-rest">
@@ -256,7 +360,7 @@
                   </span>
                   <p class="index-bouquets-8march__desc">Авторский букет с гортензиями и кустовыми розами</p>
                   <p class="index-bouquets-8march__price">3 150 Р</p>
-                  <span class="index-bouquets-8march__btn beige_button">В КОРЗИНУ</span>
+                  <span class="index-bouquets-8march__btn beige_button">В КАТАЛОГ</span>
                 </a>
                 <a href="{% url 'catalog:index' %}" class="index-bouquets-8march__card">
                   <span class="index-bouquets-8march__img-wrap">
@@ -267,6 +371,8 @@
                 </a>
               </div>
             </div>
+            {% endfor %}
+            {% endfor %}
           </div>
           <div class="index-bouquets-8march__footer index-8march__footer-catalog">
             <a href="{% url 'catalog:index' %}" class="index-bouquets-8march__btn-catalog index-8march-btn-catalog">СМОТРЕТЬ ВЕСЬ КАТАЛОГ</a>

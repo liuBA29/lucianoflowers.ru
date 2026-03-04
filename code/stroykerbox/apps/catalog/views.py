@@ -289,9 +289,12 @@ class CategoryView(DetailPublishedBase):
                 and not check_page_has_banners(self.request.path)
             )
 
-        list_view_mode = int(
-            self.request.COOKIES.get('list_view_mode', config.CATALOG_LIST_VIEW_MODE)
-        )
+        try:
+            list_view_mode = int(
+                self.request.COOKIES.get('list_view_mode') or config.CATALOG_LIST_VIEW_MODE
+            )
+        except (ValueError, TypeError):
+            list_view_mode = int(config.CATALOG_LIST_VIEW_MODE)
 
         context['list_view_mode'] = list_view_mode
         context['list_view_mode_class'] = LIST_VIEW_MODE_CLASSES[list_view_mode]
@@ -301,6 +304,10 @@ class CategoryView(DetailPublishedBase):
         location = getattr(self.request, 'location', None)
 
         current_page = self.request.GET.get('page', 1)
+        try:
+            current_page = int(current_page) if current_page else 1
+        except (ValueError, TypeError):
+            current_page = 1
 
         form = FilterForm(self.object, location, self.request.GET)
 

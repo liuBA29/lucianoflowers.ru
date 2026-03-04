@@ -398,6 +398,7 @@ class ProductImagesInlineAdmin(CollapsedMixin, admin.TabularInline):
     fields = ('image', 'preview', 'position')
     readonly_fields = ('preview',)
     extra = 0
+    classes = ()  # блок картинок развёрнут по умолчанию в форме товара
 
     def preview(self, obj):
         if obj.image:
@@ -505,6 +506,7 @@ class ProductAdmin(ImportExportModelAdmin):
         settings, 'ADMIN__PRODUCT_PER_PAGE', config.ADMIN__PRODUCT_PER_PAGE
     )
     list_display = [
+        'image_thumb',
         'name',
         'sku',
         'price',
@@ -615,10 +617,10 @@ class ProductAdmin(ImportExportModelAdmin):
     )
 
     inlines = (
+        ProductImagesInlineAdmin,
         ProductRefInline,
         ProductStockAvailabilityInline,
         ProductLocationPriceInline,
-        ProductImagesInlineAdmin,
         ProductCertificateInline,
         ProductParameterValueMembershipInline,
         ProductPropsInline,
@@ -779,12 +781,25 @@ class ProductAdmin(ImportExportModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         self.request = request
-        qs = qs.annotate(
+        qs = qs.prefetch_related('images').annotate(
             available=Coalesce(
                 Sum('stocks_availability__available'), 0, output_field=IntegerField()
             )
         )
         return qs
+
+    @admin.display(description=_('фото'))
+    def image_thumb(self, obj):
+        if not obj:
+            return ''
+        img = obj.main_image
+        if not img or not img.image:
+            return format_html('<span style="color:#999;">—</span>')
+        try:
+            thumb = get_thumbnail(img.image, '60x60', quality=80)
+            return format_html('<img src="{}" alt="" style="max-width:60px;max-height:60px;">', thumb.url)
+        except (IOError, UnidentifiedImageError):
+            return format_html('<span style="color:#999;">?</span>')
 
     def available(self, obj):
         return obj.available

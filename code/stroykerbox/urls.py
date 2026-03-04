@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from django.urls import path, re_path, include
+from django.urls import path, re_path, include, reverse
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.urls import reverse
+from django.db.models import Exists, OuterRef
 
 from rest_framework.authtoken import views
 from filebrowser.sites import site
@@ -22,7 +22,7 @@ from stroykerbox.apps.utils.views import clear_cache, clear_thumbnail_cache
 from stroykerbox.apps.search.views import SearchResult
 from stroykerbox.apps.common.views import StaffCheckPage, DashboardPage
 from stroykerbox.apps.crm.forms import FeedbackMessageForm
-from stroykerbox.apps.catalog.models import Category, Product
+from stroykerbox.apps.catalog.models import Category, Product, ProductImage
 from stroykerbox.apps.catalog.category_slugs import CATEGORY_NAME_TO_SLUG
 
 YML_URL = getattr(config, 'YML_URL', 'catalog_export.yml') or 'catalog_export.yml'
@@ -81,20 +81,57 @@ def view_8march_design_test(request):
             'alt': alt,
             'label': label,
         })
-    # Блок «Акции» 8march: пока все товары каталога (картинка, цена, ссылка).
+    # Блок «Акции» 8march: только товары, у которых есть хотя бы одна картинка (чтобы в блоке отображались фото).
+    has_image = Exists(ProductImage.objects.filter(product=OuterRef('pk')))
     products_qs = (
         Product.objects.published()
         .exclude_by_modification_code()
+        .annotate(has_img=has_image)
+        .filter(has_img=True)
+        .prefetch_related('images')
         .order_by('-id')[:24]
     )
     products_8march = list(products_qs)
     if not products_8march:
-        # Запасной вариант: если после exclude_by_modification_code никого не осталось (пустая БД или все отфильтровались).
+        # Запасной вариант: если нет товаров с картинками — берём любые опубликованные.
         products_8march = list(
             Product.objects.filter(published=True)
             .exclude(slug='')
+            .prefetch_related('images')
             .order_by('-id')[:24]
         )
+
+    # Блок «Сборные букеты»: 9 случайных товаров с фото из категории «Коллекция 8 марта» (slug 8-marta).
+    bouquets_8march_rows = []
+    fallback_bouquets_8march_rows = []
+    category_8marta = Category.objects.filter(slug='8-marta').first()
+    if category_8marta:
+        has_image = Exists(ProductImage.objects.filter(product=OuterRef('pk')))
+        bouquets_qs = (
+            Product.objects.filter(categories=category_8marta, published=True)
+            .annotate(has_img=has_image)
+            .filter(has_img=True)
+            .prefetch_related('images')
+            .order_by('?')[:9]
+        )
+        bouquets_list = list(bouquets_qs)
+        for i in range(0, len(bouquets_list), 3):
+            row = bouquets_list[i:i + 3]
+            while len(row) < 3:
+                row.append(None)
+            bouquets_8march_rows.append(row)
+        # Fallback для блока {% empty %}: любые 9 товаров из 8-marta (с фото или без) — реальные ссылки и фото из каталога.
+        fallback_qs = list(
+            Product.objects.filter(categories=category_8marta, published=True)
+            .prefetch_related('images')
+            .order_by('?')[:9]
+        )
+        for i in range(0, len(fallback_qs), 3):
+            row = fallback_qs[i:i + 3]
+            while len(row) < 3:
+                row.append(None)
+            fallback_bouquets_8march_rows.append(row)
+
     return render(request, '8march_design_test.html', {
         'cart_count': cart_count,
         'header_phone': header_phone or None,
@@ -105,6 +142,8 @@ def view_8march_design_test(request):
         'feedback_form': FeedbackMessageForm(),
         'categories_8march': categories_8march,
         'products_8march': products_8march,
+        'bouquets_8march_rows': bouquets_8march_rows,
+        'fallback_bouquets_8march_rows': fallback_bouquets_8march_rows,
     })
 
 
@@ -197,6 +236,9 @@ if 'stroykerbox.apps.booking' in settings.INSTALLED_APPS:
     urlpatterns += [path('booking/', include('stroykerbox.apps.booking.urls'))]
 
 if settings.DEBUG or settings.TESTING_MODE:
+    urlpatterns = urlpatterns + static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
     try:
         import debug_toolbar
     except (ImportError, ModuleNotFoundError):
@@ -207,7 +249,6 @@ if settings.DEBUG or settings.TESTING_MODE:
                 path('__debug__/', include(debug_toolbar.urls)),
             ]
             + urlpatterns
-            + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
         )
 
 

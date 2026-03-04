@@ -8,7 +8,6 @@ import os
 from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
-from model_bakery import baker
 
 from stroykerbox.apps.catalog.models import Category, Product, ProductImage
 
@@ -68,13 +67,28 @@ class Command(BaseCommand):
         ][:count]
 
         created = 0
+        images_attached = 0
         for i, data in enumerate(products_data):
-            if Product.objects.filter(slug=data['slug']).exists():
-                self.stdout.write(f'Товар {data["slug"]} уже есть, пропуск.')
+            product = Product.objects.filter(slug=data['slug']).first()
+            if product:
+                # Товар уже есть — привязываем картинку, если её ещё нет
+                if not product.images.exists():
+                    static_rel = STATIC_IMAGES[i % len(STATIC_IMAGES)]
+                    src = os.path.join(static_dir, static_rel)
+                    if os.path.isfile(src):
+                        filename = os.path.basename(static_rel)
+                        with open(src, 'rb') as f:
+                            prod_img = ProductImage(product=product, position=0)
+                            prod_img.image.save(filename, File(f), save=True)
+                        self.stdout.write(f'  Картинка для {data["slug"]}: {filename}')
+                        images_attached += 1
+                    else:
+                        self.stdout.write(self.style.WARNING(f'  Файл не найден: {src}'))
+                else:
+                    self.stdout.write(f'Товар {data["slug"]} уже есть (с картинкой), пропуск.')
                 continue
 
-            product = baker.make(
-                Product,
+            product = Product.objects.create(
                 name=data['name'],
                 slug=data['slug'],
                 sku=data['sku'],
@@ -98,4 +112,8 @@ class Command(BaseCommand):
 
             created += 1
 
-        self.stdout.write(self.style.SUCCESS(f'Создано товаров: {created}. Категория: {root.name}'))
+        msg = f'Создано товаров: {created}.'
+        if images_attached:
+            msg += f' Привязано картинок к существующим: {images_attached}.'
+        msg += f' Категория: {root.name}'
+        self.stdout.write(self.style.SUCCESS(msg))
